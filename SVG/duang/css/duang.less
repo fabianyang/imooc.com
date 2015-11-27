@@ -1,0 +1,164 @@
+body {
+  background: #F0F0F0;
+}
+
+h1 {
+  width: 800px;
+  color: black;
+  font-family: 'STHeiTi', 'Microsoft YaHei', 'HeiTi';
+  font-weight: normal;
+  margin: 0 auto;
+  padding: 20px 0;
+
+  border-bottom: 1px solid white;
+  box-shadow: inset 0 -1px #CCC;
+}
+
+.sound-article {
+  width: 800px;
+  margin: 20px auto;
+  font-size: 0;
+  text-align: center;
+
+  .sound {
+    display: inline-block;
+    width: 300px;
+    font-size: 12px;
+    text-align: center;
+    position: relative;
+
+    .avator {
+      display: block;
+      margin-top: 100px;
+      cursor: pointer;
+      h2 {
+        font-weight: normal;
+        color: orange;
+      }
+      img {
+        border-radius: 100%;
+        overflow: hidden;
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    .sound-content {
+      position: absolute;
+      width: 200px;
+      height: 100px;
+      box-sizing: border-box;
+
+      svg {
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        path, polygon {
+          fill: white;
+          stroke: orange;
+          stroke-width: 6px;
+        }
+      }
+      p {
+        position: relative;
+        margin: 0;
+      }
+    }
+
+    &#sound-1 .sound-content {
+      left: -80px;
+      top: 0;
+      padding: 25px 60px 20px 30px;
+
+      svg {
+        #path1 {
+          transform: scale(0, 0);
+          transform-origin: center;
+          opacity: 0;
+          transition-duration: .3s;
+          transition-delay: 0;
+        }
+        #path2 {
+          transform: scale(0, 0);
+          transform-origin: center;
+          opacity: 0;
+          transition-duration: .3s;
+          transition-delay: .1s;
+        }
+        #path3 {
+          transform: scale(0, 0);
+          transform-origin: center;
+          opacity: 0;
+          transition-duration: .3s;
+          transition-delay: .2s;
+        }
+        #path4 {
+          transform: scale(0, 0);
+          transform-origin: center;
+          opacity: 0;
+          transition-duration: .3s;
+          transition-delay: .25s;
+        }
+      }
+
+      p {
+        transition: .2s .35s;
+        opacity: 0;
+        transform: translate(0, -10px);
+      }
+    }
+
+    &#sound-2 .sound-content {
+      left: 50%;
+      margin-left: -100px;
+      top: -10px;
+      padding: 25px;
+
+      svg {
+        polygon {
+          stroke-dasharray: 1500;
+          stroke-dashoffset: 1500;
+          fill-opacity: 0;
+          transition: .6s;
+        }
+      }
+      p {
+        transition: .4s;
+        opacity: 0;
+        transform: scale(0.5);
+      }
+    }
+
+    &:hover {
+      &#sound-1 .sound-content {
+        svg {
+          #path1, #path2, #path3, #path4 {
+            transform: scale(1, 1);
+            opacity: 1;
+            transition-delay: 0;
+          }
+        }
+        p {
+          opacity: 1;
+          transform: translate(0, 0);
+        }
+      }
+
+      &#sound-2 .sound-content {
+        svg {
+          polygon {
+            stroke-dashoffset: 0;
+            fill-opacity: 1;
+          }
+        }
+        p {
+          opacity: 1;
+          transform: translate(0, 0);
+        }
+      }
+    }
+  }
+
+}

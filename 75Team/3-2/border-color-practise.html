@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>border-color效果</title>
+	<style type="text/css">
+		body{
+		  color: #fff;
+		  background: #222;
+		}
+		h1{
+			font-size: 14px;
+			font-family: "Microsoft Yahei";
+			text-align: center;
+		}
+		.butterfly,
+		.butterfly .circle{
+		  display:block;
+		  width:300px;
+		  height:300px;
+		  border-radius:50%;
+		}
+		.butterfly{
+		  position:relative;
+		  margin:50px auto;
+		}
+		.butterfly .circle{
+		  position:absolute;
+		  top:0;
+		  left:0;
+		  border:1em solid #3b8210;
+		  z-index:-1;
+		  border-bottom-color:#ebc90b;
+		  border-right-color:#ebc90b;
+		  -webkit-transition:-webkit-transform 1s linear;
+		  transition:transform 1s linear;
+		}
+		.butterfly img{
+		  width:100%;
+		  height:auto;
+		}
+		.butterfly:hover .circle{
+		  -webkit-transform:rotate(180deg);
+		  transform:rotate(180deg);
+		}
+	</style>
+</head>
+<body>
+	<h1>请使用webkit内核标准浏览器查看效果</h1>
+	<a href="http://image.haosou.com/i?q=%E8%9D%B4%E8%9D%B6&src=tab_www" class="butterfly" target="_blank">
+	  <div class="circle"></div>
+	  <img src="http://p3.qhimg.com/t014ca5b3e65fe126a6.png" alt="" />
+	</a> 
+</body>
+</html>

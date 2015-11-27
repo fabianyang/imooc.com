@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="MobileOptimized" content="320">
+    <title>pic storage demo 本地存储图片策略</title>
+</head>
+
+<body>
+	<!-- 场景适用：图片不更改，第二次访问希望用户马上看到。注意：图片base64比较大，很费localstorage资源 -->
+</body>
+<script>
+var src = "3.jpg";
+
+function set(key) {
+    var img = document.createElement('img');
+    img.src = src;
+
+    // 当图片加载完成时，触发回调函数
+    img.addEventListener('load', function() {
+        var imgCanvas = document.createElement('canvas');
+        imgContext = imgCanvas.getContext('2d');
+        // 确保canvas元素大小和图片尺寸一致
+        imgCanvas.width = this.width;
+        imgCanvas.height = this.height;
+        // 渲染图片到canvas中
+        imgContext.drawImage(this, 0, 0, this.width, this.height);
+        // 用 data url 的形式取出
+        // toDataURL(type)- 返回画布数据，默认类型为 image/png。字符串，base64，dataUri的图片
+        var imgAsDataURL = imgCanvas.toDataURL('image/png');
+        // 保存到本地存储。try catch 以免不支持 localStroage
+        try {
+            localStorage.setItem(key, imgAsDataURL);
+        } catch (e) {
+            console.log('失败:' + e);
+        }
+    }, false);
+}
+
+// 从本地缓存获取图片并渲染
+function get(key) {
+    var srcStr = localStorage.getItem(key);
+    var imgObj = document.createElement('img');
+    imgObj.src = srcStr;
+    document.body.appendChild(imgObj);
+}
+</script>
+
+</html>

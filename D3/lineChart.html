@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- <link rel="stylesheet" type="text/css" href="style.css" media="screen"> -->
+    <style type="text/css">
+    #container {
+        background: #ddd;
+        width: 500px;
+        height: 300px;
+    }
+    
+    path {
+        fill: none;
+        stroke: #4682B4;
+        stroke-width: 2;
+    }
+
+    .domain, .tick line {
+        stroke: gray;
+        stroke-width: 1;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script src="http://d3js.org/d3.v3.js"></script>
+    <script type="text/javascript">
+    var width = 500,
+        height = 250,
+        margin = {
+            left: 50,
+            top: 30,
+            right: 20,
+            bottom: 20,
+        },
+        g_width = width - margin.left - margin.right,
+        g_height = height - margin.top - margin.bottom;
+
+    //SVG
+    var svg = d3.select("#container")
+        .append("svg:svg")
+        //width,height
+        .attr("width", width) //attribute
+        .attr("height", height)
+
+    var g = d3.select("svg")
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+    var data = [1, 2, 6, 8, 7, 6]
+
+    var scale_x = d3.scale.linear()
+        .domain([0, data.length - 1]) //输入的范围
+        .range([0, g_width]) //输出的范围
+
+    var scale_y = d3.scale.linear()
+        .domain([0, d3.max(data)])
+        .range([g_height, 0]); //y轴坐标上下调转
+
+    var line_generator = d3.svg.line()
+        .x(function(d, i) {
+            return scale_x(i);
+        }) //0,1,2,3,
+        .y(function(d) {
+            return scale_y(d);
+        }) //1,3,5
+        .interpolate("cardinal") //折线变曲线
+
+    g.append("path")
+        .attr("d", line_generator(data)) //d="M1,0L20,40L40,60L100,100L0,200",d-path data
+
+    var x_axis = d3.svg.axis().scale(scale_x),
+        y_axis = d3.svg.axis().scale(scale_y).orient('left');
+
+    g.append('g').call(x_axis)
+        .attr('transform', 'translate(' + 0 + ',' + g_height + ')');
+    g.append('g').call(y_axis);
+
+    g.append('g').call(y_axis)
+        .append('text').text('Price($)')
+        .attr({
+            'transform': 'rotate(-90)',
+            'text-anchor': 'end',
+            'dy': '1em'
+        });
+    </script>
+</body>
+
+</html>

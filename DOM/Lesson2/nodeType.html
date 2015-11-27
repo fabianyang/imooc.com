@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>nodeType</title>
+</head>
+<body>
+	<div id="container">这是一个元素节点</div>
+	<script>
+		var divNode = document.getElementById("container");
+		/*if (divNode.nodeType == Node.ELEMENT_NODE){
+			alert("Node is an element.");
+		}*/
+		if (divNode.nodeType == 1){
+			alert("Node is an element.");
+		}
+	</script>
+</body>
+</html>

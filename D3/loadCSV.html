@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+
+    .domain, .tick line {
+        fill: none;
+        stroke: #808080;
+        stroke-width: 1;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script src="http://d3js.org/d3.v3.js"></script>
+    <script type="text/javascript">
+    d3.csv("data.csv", type, function(data) {
+        console.log(data);
+
+        var width = 1000,
+            height = 500,
+            margin = {
+                left: 30,
+                top: 30,
+                right: 30,
+                bottom: 30,
+            },
+            svg_width = width + margin.left + margin.right,
+            svg_height = height + margin.top + margin.bottom;
+
+        var scale_y = d3.scale.linear()
+            .domain([0, d3.max(data, function(d) {
+                return d.population
+            })])
+            .range([height, 0]);
+
+        var scale_x = d3.scale.ordinal()
+            .domain(data.map(function(d) {
+                return d.year
+            }))
+            .rangeBands([0, width], 0.1);
+
+
+        var svg = d3.select('#container')
+            .append('svg')
+            .attr('width', svg_width)
+            .attr('height', svg_height)
+
+        var chart = svg.append('g')
+            .attr('transform', function(d, i) {
+                return 'translate(' + margin.left + ',' + margin.top + ')';
+            })
+
+        var x_axis = d3.svg.axis().scale(scale_x),
+            y_axis = d3.svg.axis().scale(scale_y).orient('left');
+
+        chart.append("g").call(x_axis)
+            .attr('transform', 'translate(0,' + height + ')');
+        chart.append("g").call(y_axis);
+
+        var column = chart.selectAll('.bar')
+            .data(data)
+            .enter()
+            .append('g')
+            .attr('class', 'bar')
+            .attr('transform', function(d, i) {
+                return 'translate(' + scale_x(d.year) + ',0)';
+            })
+
+        column.append('rect')
+            .attr({
+                'y': function(d) {
+                    return scale_y(d.population);
+                },
+                "width": scale_x.rangeBand(),
+                "height": function(d) {
+                    return height - scale_y(d.population);
+                }
+            })
+            .style('fill', 'steelblue');
+
+        column.append('text')
+            .text(function(d) {
+                return d.year;
+            })
+            .attr({
+                'x': scale_x.rangeBand() / 2,
+                'y': function(d) {
+                    return scale_y(d.population);
+                },
+                'dy': '15',
+                'text-anchor': 'middle'
+            })
+
+    });
+
+    function type(d) {
+        d.population = +d.population;
+        return d;
+    }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>直角边框分页页码--背景贴图实现圆角</title>
+<style type="text/css">
+.page-normal{
+	color:#ff6500;
+	text-align:center;
+	font-size:0;
+}
+.page-normal a,.page-normal a:hover.page-normal .page-current{
+	display:inline-block;
+	padding:0 0 0 3px;
+	font-size:14px;
+	margin-left:10px;
+	height:28px;
+	background:url(img/page-round.jpg) no-repeat 0 0;
+}
+
+.page-normal a span,.page-normal .page-current span,.page-normal .page-prev span{
+	display:inline-block;
+	padding:5px 10px 0 0;
+	font-size:14px;
+	margin-left:10px;
+	height:23px;
+
+	background:url(img/page-round.jpg) no-repeat right 0;
+}
+.page-normal .page-current,.page-normal a:hover{
+	background-position:0 -28px;
+}
+.page-normal .page-current span,.page-normal a:hover span{
+	background-position:right -28px;
+	color:#fff;
+}
+.page-normal a{
+	color:#ff6500;
+	text-decoration:none;
+}
+.page-normal .page-current{
+	color:#ff6500;
+}
+.page-normal .page-prev{
+	color:#ffe3c6;
+}
+</style>
+</head>
+
+<body>
+<div class="page-normal">
+    <a class="page-prev"><span>&lt;</span></a>
+    <a class="page-current"><span>1</span></a>
+    <a href="#"><span>2</span></a>
+    <a href="#"><span>3</span></a>
+    <a href="#"><span>4</span></a>
+    <a href="#"><span>5</span></a>
+    <a href="#"><span>6</span></a>
+    <a href="#"><span>7</span></a>
+    ...
+    <a href="#"><span>199</span></a>
+    <a href="#"><span>200</span></a>
+    <a href="#" class="page-next"><span>&gt;</span></a>
+</div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>html</title>
+	</head>
+	<body>
+		<!--tip区-->
+		<div id="tip">您目前已登录帐号felixlu，为保障安全，请输入密码确认</div>
+		<ul id="list-node"></ul>
+		<script>
+			var frag = document.createDocumentFragment();
+			for(var x = 0; x < 10; x++) {
+				var li = document.createElement("li");
+				li.innerHTML = "List item " + x;
+				frag.appendChild(li);
+			}
+			document.getElementById("list-node").appendChild(frag);
+		</script>
+	</body>
+</html>

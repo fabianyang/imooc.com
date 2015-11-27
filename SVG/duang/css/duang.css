@@ -1,0 +1,139 @@
+body {
+  background: #F0F0F0;
+}
+h1 {
+  width: 800px;
+  color: black;
+  font-family: 'STHeiTi', 'Microsoft YaHei', 'HeiTi';
+  font-weight: normal;
+  margin: 0 auto;
+  padding: 20px 0;
+  border-bottom: 1px solid white;
+  box-shadow: inset 0 -1px #cccccc;
+}
+.sound-article {
+  width: 800px;
+  margin: 20px auto;
+  font-size: 0;
+  text-align: center;
+}
+.sound-article .sound {
+  display: inline-block;
+  width: 300px;
+  font-size: 12px;
+  text-align: center;
+  position: relative;
+}
+.sound-article .sound .avator {
+  display: block;
+  margin-top: 100px;
+  cursor: pointer;
+}
+.sound-article .sound .avator h2 {
+  font-weight: normal;
+  color: orange;
+}
+.sound-article .sound .avator img {
+  border-radius: 100%;
+  overflow: hidden;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+}
+.sound-article .sound .sound-content {
+  position: absolute;
+  width: 200px;
+  height: 100px;
+  box-sizing: border-box;
+}
+.sound-article .sound .sound-content svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.sound-article .sound .sound-content svg path,
+.sound-article .sound .sound-content svg polygon {
+  fill: white;
+  stroke: orange;
+  stroke-width: 6px;
+}
+.sound-article .sound .sound-content p {
+  position: relative;
+  margin: 0;
+}
+.sound-article .sound#sound-1 .sound-content {
+  left: -80px;
+  top: 0;
+  padding: 25px 60px 20px 30px;
+}
+.sound-article .sound#sound-1 .sound-content svg #path1 {
+  transform: scale(0, 0);
+  transform-origin: center;
+  opacity: 0;
+  transition-duration: .3s;
+  transition-delay: 0;
+}
+.sound-article .sound#sound-1 .sound-content svg #path2 {
+  transform: scale(0, 0);
+  transform-origin: center;
+  opacity: 0;
+  transition-duration: .3s;
+  transition-delay: .1s;
+}
+.sound-article .sound#sound-1 .sound-content svg #path3 {
+  transform: scale(0, 0);
+  transform-origin: center;
+  opacity: 0;
+  transition-duration: .3s;
+  transition-delay: .2s;
+}
+.sound-article .sound#sound-1 .sound-content svg #path4 {
+  transform: scale(0, 0);
+  transform-origin: center;
+  opacity: 0;
+  transition-duration: .3s;
+  transition-delay: .25s;
+}
+.sound-article .sound#sound-1 .sound-content p {
+  transition: .2s .35s;
+  opacity: 0;
+  transform: translate(0, -10px);
+}
+.sound-article .sound#sound-2 .sound-content {
+  left: 50%;
+  margin-left: -100px;
+  top: -10px;
+  padding: 25px;
+}
+.sound-article .sound#sound-2 .sound-content svg polygon {
+  stroke-dasharray: 1500;
+  stroke-dashoffset: 1500;
+  fill-opacity: 0;
+  transition: .6s;
+}
+.sound-article .sound#sound-2 .sound-content p {
+  transition: .4s;
+  opacity: 0;
+  transform: scale(0.5);
+}
+.sound-article .sound:hover#sound-1 .sound-content svg #path1,
+.sound-article .sound:hover#sound-1 .sound-content svg #path2,
+.sound-article .sound:hover#sound-1 .sound-content svg #path3,
+.sound-article .sound:hover#sound-1 .sound-content svg #path4 {
+  transform: scale(1, 1);
+  opacity: 1;
+  transition-delay: 0;
+}
+.sound-article .sound:hover#sound-1 .sound-content p {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+.sound-article .sound:hover#sound-2 .sound-content svg polygon {
+  stroke-dashoffset: 0;
+  fill-opacity: 1;
+}
+.sound-article .sound:hover#sound-2 .sound-content p {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+/*# sourceMappingURL=duang.css.map */

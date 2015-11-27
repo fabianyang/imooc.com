@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div id="container"></div>
+    <script src="http://d3js.org/d3.v3.js"></script>
+    <script type="text/javascript">
+    var data = [1, 4, 7, 2, 9, 6, 5, 16],
+        column_width = 50,
+        column_padding = 10,
+        svg_width = (column_width + column_padding) * data.length,
+        svg_height = 500;
+
+    var scale = d3.scale.linear()
+        .domain([0, d3.max(data)])
+        .range([svg_height, 0]);
+
+    var svg = d3.select('#container')
+        .append('svg')
+        .attr('width', svg_width)
+        .attr('height', svg_height)
+
+    var column = svg.selectAll('g')
+        .data(data)
+        .enter()
+        .append('g')
+        .attr('transform', function(d, i) {
+            return 'translate(' + i * (column_width + column_padding) + ',0)';
+        })
+
+    column.append('rect')
+        .attr({
+            'y': function(d) {
+                return scale(d);
+            },
+            "width": column_width,
+            "height": function(d) {
+                return svg_height - scale(d);
+            }
+        })
+        .style('fill', 'steelblue');
+
+    column.append('text')
+        .text(function(d) {
+            return d;
+        })
+        .attr({
+            'x': column_width / 2,
+            'y': function(d) {
+                return scale(d);
+            },
+            'dy': '15',
+            'text-anchor': 'middle'
+        })
+    </script>
+</body>
+
+</html>

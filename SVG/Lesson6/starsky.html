@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>浪漫星空</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link href="" rel="stylesheet">
+    <style type="text/css">
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background: #001122;
+        line-height: 0;
+        font-size: 0;   
+        /*svg标签是内联元素，防止撑满后会有滚动条出现*/
+    }
+    </style>
+</head>
+
+<body>
+    <svg width="100%" height="100%" 
+        viewBox="-400 -300 800 600" 
+        preserveAspectRatio="xMidYMid slice" 
+        xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <polygon id="star" points="0 -10 2 -2 10 0 2 2 0 10 -2 2 -10 0 -2 -2" fill="white" />
+        </defs>
+        <g id="star-group"></g>
+    </svg>
+</body>
+<script type="text/javascript">
+var SVG_NS = 'http://www.w3.org/2000/svg';
+var XLINK_NS = 'http://www.w3.org/1999/xlink';
+
+var paper = document.querySelector('svg');
+
+renderStar();
+
+function use(origin) {
+    var _use = document.createElementNS(SVG_NS, 'use');
+    _use.setAttributeNS(XLINK_NS, 'xlink:href', '#' + origin.id);
+    return _use;
+}
+
+function random(min, max) {
+    return min + (max - min) * Math.random();
+}
+
+function renderStar() {
+    var starRef = document.getElementById('star');
+    var starGroup = document.getElementById('star-group');
+    var starCount = 500;
+    console.log(starGroup);
+    var star;
+    while (starCount--) {
+        star = use(starRef);
+        star.setAttribute('opacity', random(0.1, 0.4));
+        star.setAttribute('transform', 'translate(' + random(-400, 400) + ',' + random(-300, 50) + ') scale(' + random(0.1, 0.6) + ')');
+        starGroup.appendChild(star);
+    }
+}
+</script>
+
+</html>

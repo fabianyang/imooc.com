@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<style>
+		svg {
+			background: #fcfcfc;
+			display: block;
+			margin: 20px auto;
+			border: 1px solid #ccc;
+		}
+		#transform {
+			width: 300px;
+		}
+	</style>
+</head>
+<body>
+	<fieldset>
+		<legend>设置</legend>
+		<label>分组：
+			<select id="group">
+				<option value="a">a</option>
+				<option value="b">└b</option>
+				<option value="c">&nbsp;&nbsp;└c</option>
+				<option value="d">└d</option>
+			</select>
+		</label>
+		<label>变换：
+			<input id="tc" type="text" />
+			<span id="ts"></span>
+		</label>
+	</fieldset>
+	<svg xmlns="http://www.w3.org/2000/svg"
+		width="1000" height="600"
+		viewBox="-200.5 -100.5 1000 600">
+        <defs>
+        	<g id="coord">
+        		<line x1="0" y1="0" x2="300" y2="0" />
+        		<line x1="0" y1="0" x2="0" y2="300" />
+        		<circle cx="0" cy="0" r="2" />
+        		<circle cx="100" cy="0" r="2" />
+        		<circle cx="200" cy="0" r="2" />
+        		<circle cx="0" cy="100" r="2" />
+        		<circle cx="0" cy="200" r="2" />
+        	</g>
+        </defs>
+        <use xlink:href="#coord" stroke="black" fill="black" />
+        <text fill="black" x="5" y="20">World</text>
+    	<g id="a" stroke="red" fill="red">
+    		<use xlink:href="#coord" />
+        	<text x="5" y="20">a</text>
+
+	    	<g id="b" stroke="blue" fill="blue">
+	    		<use xlink:href="#coord" />
+	        	<text x="5" y="20">b</text>
+
+		    	<g id="c" stroke="green" fill="green">
+		    		<use xlink:href="#coord" />
+		        	<text x="5" y="20">c</text>
+				</g>
+			</g>
+
+
+	    	<g id="d" stroke="pink" fill="pink">
+	    		<use xlink:href="#coord" />
+	        	<text x="5" y="20">d</text>
+			</g>
+		</g>
+    </svg>
+    <script type="text/javascript">
+    	
+    	function target() {
+    		return document.getElementById(group.value)
+    	}
+
+    	// 把变换命令转换为变换字符串
+    	// 't 10 10 r 30 s 1.3' => 'translate(10,10) rotate(30) scale(1.3)'
+    	function tc2ts(tc) {
+    		var arr = ( tc || '' ).split(' ');
+    		var ts = '';
+    		var elem, lastElemType;
+    		var cmd = {
+    			't': 'translate(',
+    			'r': 'rotate(',
+    			's': 'scale(',
+    			'm': 'matrix('
+    		}
+
+    		while(elem = arr.shift()) {
+    			if(cmd[elem]) {
+    				if(lastElemType == 'number') ts += ')'
+					ts += cmd[elem];
+					lastElemType = 'command';
+    			} else {
+    				if(lastElemType == 'number') ts += ', '
+					ts += elem;
+					lastElemType = 'number';
+    			}
+    		}
+    		if(ts.length) ts += ')';
+			return ts;
+    	}
+
+    	group.oninput = function() {
+    		tc.value = target().tc || '';
+    		ts.innerHTML = tc2ts(tc.value);
+    	}
+
+    	tc.oninput = function() {
+    		target().tc = tc.value;
+    		target().setAttribute('transform', ts.innerHTML = tc2ts(tc.value));
+    	}
+    </script>
+</body>
+</html>

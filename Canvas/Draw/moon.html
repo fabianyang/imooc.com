@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>arcTo</title>
+    <style></style>
+</head>
+
+<body>
+    <canvas id="canvas" style="border:3px solid #aaa;display:block;margin:50px auto;">
+        当前浏览器不支持Canvas，请更换浏览器后再试
+    </canvas>
+    <script>
+    window.onload = function() {
+
+        var canvas = document.getElementById("canvas");
+
+        canvas.width = 800;
+        canvas.height = 800;
+
+        var context = canvas.getContext("2d");
+
+
+        // context.arc(400, 400, 300, 0.5 * Math.PI, 1.5 * Math.PI, true); // 逆时针绘制半弧，外圆
+        // context.moveTo(400, 100);
+        // context.arcTo(1200, 400, 400, 700, (400 - 100) * dis(400, 100, 1200, 400) / (1200 - 400))
+        // context.stroke();
+
+        fillMoon(context, 2, 400, 400, 300, 0);
+
+    }
+
+    // 绘制带有填充颜色的月亮，d 控制点坐标横坐标值。
+    // 后续函数中，在绘制月亮轮廓时，会在一个正则的环境下，以(0,0)点为圆心，1为半径的环境下，所以d的取值也在这样的数值范围内
+    function fillMoon(cxt, d, x, y, R, rot, fillColor) {
+        cxt.save();
+        cxt.translate(x, y);
+        cxt.rotate(rot * Math.PI / 180);
+        cxt.scale(R, R);
+        pathMoon(cxt, d);
+        cxt.fillStyle = fillColor || "#fb5"
+        cxt.fill();
+        cxt.restore();
+    }
+
+    // 以(0,0)点为圆心，1为半径的圆内绘制
+    // 移动到(0,-1)起始点，(d,0)控制点，(0,1)切点-内弧结束位置。根据三个点坐标计算相应圆弧半径 
+    function pathMoon(cxt, d) {
+        cxt.beginPath();
+        cxt.arc(0, 0, 1, 0.5 * Math.PI, 1.5 * Math.PI, true);
+        cxt.moveTo(0, -1);
+        cxt.arcTo(d, 0, 0, 1, dis(0, -1, d, 0) / d);
+        // cxt.quadraticCurveTo( 1.2, 0, 0, 1 );
+        cxt.closePath();
+    }
+
+    // 两点间坐标距离公式
+    function dis(x1, y1, x2, y2) {
+        return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+    }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+    <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="hsl(0,0%,0%)"></stop>
+            <stop offset="1" stop-color="hsl(0,0%,15%)"></stop>
+        </linearGradient>
+        <radialGradient id="g2" x1="0" y1="0" x2="1" y2="1" r="0.5" fx="0.3" fy="0.3">
+            <stop offset="0" stop-color="hsla(0,0%,100%, .5)"></stop>
+            <stop offset="1" stop-color="hsla(0,0%,100%, 0)"></stop>
+        </radialGradient>
+        <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="hsl(30,80%,60%)"></stop>
+            <stop offset="1" stop-color="hsl(0,60%,30%)"></stop>
+        </linearGradient>
+        <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="hsl(0,60%,20%)"></stop>
+            <stop offset="1" stop-color="hsl(30,100%,60%)"></stop>
+        </linearGradient>
+        <pattern id="p1" patternUnits="userSpaceOnUse" patternContentUnits="userSpaceOnUse" x="0" y="0" width="10" height="10">
+            <rect x="0" y="0" width="10" height="10" fill="#222"></rect>
+            <circle cx="5" cy="5" r="2" fill="#292929" stroke="url(#g1)" stroke-width="0.5"></circle>
+        </pattern>
+    </defs>
+    <rect x="0" y="0" width="800" height="600" fill="url(#p1)"></rect>
+    <ellipse cx="200" cy="100" rx="600" ry="400" fill="url(#g2)"></ellipse>
+    <text x="400" y="300" font-size="200" text-anchor="middle" fill="url(#g3)" stroke="url(#g2)">慕课网</text>
+    <text x="400" y="420" font-size="100" text-anchor="middle" stroke="url(#g3)" fill="url(#g4)">imooc.com</text>
+</svg>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>正圆运动效果</title>
+	<style type="text/css">
+		body {
+			background-color: #eaf0f2;
+		}
+		h1{
+			font-size: 14px;
+			font-family: "Microsoft Yahei";
+			text-align: center;
+		}
+		body{
+		  background:#000;
+		}
+		.stage{
+		  width:400px;
+		  height:400px;
+		  margin:100px auto;
+		  background:url(http://p2.qhimg.com/t01d0bccc09b80b460d.jpg) no-repeat;
+		  background-size: cover;
+		}
+		.rocketship{
+		  width:130px;
+		  height:250px;
+		  background:url(http://p5.qhimg.com/t018efa521643aa9ede.png);
+		  background-size: cover;
+		  -webkit-transform-origin:  200% center;
+		  transform-origin:  200% center;
+		  -webkit-animation:circle 1s infinite linear;
+		}
+		@-webkit-keyframes circle{
+		  to{
+		    -webkit-transform:rotate(1turn);
+		    transform:rotate(1turn);
+		  }
+		}
+	</style>
+</head>
+<body>
+	<h1>请使用webkit内核标准浏览器查看效果</h1>
+	<div class="stage">
+		<div class="rocketship"></div>
+	</div>
+	<script type="text/javascript">
+		var btn = document.querySelector('.btn');
+		var flag = 1;
+		btn.addEventListener('click',function(e){
+		    e.preventDefault();
+		    if(flag){
+		      this.className = "btn open";
+		      flag = 0;
+		    }else{
+		      this.className = "btn";
+		      flag = 1;
+		    }
+		},false);
+	</script>
+</body>
+</html>

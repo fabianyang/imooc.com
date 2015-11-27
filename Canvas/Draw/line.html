@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>closePath + drawRect</title>
+    <style></style>
+</head>
+<body>
+<canvas id="canvas" style="border:3px solid #aaa;display:block;margin:50px auto;">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+</canvas>
+
+<script>
+    window.onload = function(){
+
+        var canvas = document.getElementById("canvas");
+
+        canvas.width = 800;
+        canvas.height = 800;
+
+        var context = canvas.getContext("2d");
+    
+        context.beginPath();
+        context.moveTo(100,350);
+        context.lineTo(500,350);
+        context.lineTo(500,200);
+        context.lineTo(700,400);
+        context.lineTo(500,600);
+        context.lineTo(500,450);
+        context.lineTo(100,450);
+        // context.lineTo(100,350);
+        context.closePath();
+       
+        context.lineWidth = 10;
+        context.strokeStyle = "#058";
+        context.fillStyle = "yellow"
+
+        context.fill();
+        context.stroke();
+        
+    }
+
+    function drawRect( cxt, x, y, width, height, borderWidth, borderColor, fillColor) {
+        context.beginPath();
+        // context.lineTo(x,y);
+        // context.lineTo(x + width, y);
+        // context.lineTo(x + width, y+height);
+        // context.lineTo(x, y+height);
+        context.rect(x, y, width, height);
+        context.closePath();
+
+        context.lineWidth = borderWidth;
+        context.fillStyle = fillColor;
+        context.strokeStyle = borderColor;
+
+        context.fill();
+        context.stroke();
+    }
+
+
+    function drawRect2( cxt, x, y, width, height, borderWidth, borderColor, fillColor) {
+
+        context.lineWidth = borderWidth;
+        context.fillStyle = fillColor;
+        context.strokeStyle = borderColor;
+
+        context.fillRect(x, y, width, height);
+        context.strokeRect(x, y, width, height);
+    }
+</script>
+</body>
+</html>

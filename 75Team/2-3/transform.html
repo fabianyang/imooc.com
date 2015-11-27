@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>照片墙效果</title>
+	<style type="text/css">
+		body{
+		  color: #fff;
+		  background: #222;
+		}
+		h1{
+			font-size: 14px;
+			font-family: "Microsoft Yahei";
+			text-align: center;
+		}
+		.cardfan{
+		  width:300px;
+		  height:200px;
+		  margin: 2rem auto;
+		}
+		.cardfan > img{
+		  position:absolute;
+		  border:10px solid #fff;
+		  box-sizing:border-box;
+		  box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.2);
+		  -webkit-transform-origin: center 400px;
+		  transform-origin: center 400px;
+		  -webkit-transition: -webkit-transform .7s ease;
+		  transition: transform .7s ease;
+		}
+		.cardfan img:first-child{
+		  -webkit-transform:rotate(5deg);
+		  transform:rotate(5deg);
+		}
+		.cardfan img:last-child{
+		  -webkit-transform:rotate(-5deg);
+		  transform:rotate(-5deg);
+		}
+		.cardfan:hover img:first-child{
+		  -webkit-transform:rotate(25deg);
+		  transform:rotate(25deg);
+		}
+		.cardfan:hover img:last-child{
+		  -webkit-transform:rotate(-25deg);
+		  transform:rotate(-25deg);
+		}
+	</style>
+</head>
+<body>
+	<h1>请使用webkit内核标准浏览器查看效果</h1>
+	<div class="cardfan">
+	  <img src="http://p3.qhimg.com/t0166077e858154cdb6.jpg" alt="" width="300" height="200"/>
+	  <img src="http://p7.qhimg.com/t01c9fca4f9a05cd8c4.jpg" alt="" width="300" height="200"/>
+	  <img src="http://p0.qhimg.com/t01fad64ae21ddd6221.jpg" alt="" width="300" height="200"/>
+	</div>
+</body>
+</html>

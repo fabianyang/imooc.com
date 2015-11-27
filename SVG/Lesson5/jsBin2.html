@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>JS Bin</title>
+</head>
+
+<body>
+    <select id="ta">
+        <option value="start">start</option>
+        <option value="end">end</option>
+        <option value="middle">center</option>
+    </select>
+    <select id="select">
+        <option value="top">top</option>
+        <option value="middle">middle</option>
+        <option value="bottom">bottom</option>
+    </select>
+    <svg>
+        <path stroke="green" d="M 0 100.5 500 100.5 M 140 0 v 200" />
+        <text id="text" x="140" y="100" fill="red" font-size="50">慕课网</text>
+        <rect id="rect" stroke="blue" fill="none"></rect>
+    </svg>
+    <script>
+
+    select.addEventListener('input', function() {
+        text.setAttribute('dy', 0);
+        var dy = getAlignmentDy(select.value);
+        text.setAttribute('dy', dy);
+        var box = text.getBBox();
+        rect.setAttribute('x', box.x);
+        rect.setAttribute('y', box.y);
+        rect.setAttribute('width', box.width);
+        rect.setAttribute('height', box.height);
+    });
+
+    ta.addEventListener('input', function() {
+        text.setAttribute('text-anchor', ta.value);
+    });
+
+    function getAlignmentDy(value) {
+        var box = text.getBBox();
+        var y = text.getAttribute('y');
+        // console.log(y, box.y);
+        switch(value) {
+            case 'top': return y - box.y;
+            case 'middle': return y - ( box.y + box.height / 2);
+            case 'bottom': return y - (box.y + box.height);
+        }
+    }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <script src="http://d3js.org/d3.v3.js"></script>
+    <script type="text/javascript">
+    d3.csv("data.text", type, function(data) {
+
+        var width = 400,
+            height = 400;
+
+        var svg = d3.select('body')
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height);
+
+        var g = svg.append('g')
+            .attr('transform', 'translate(200,200)');
+
+        var arc_generator = d3.svg.arc()
+            .innerRadius(100)
+            .outerRadius(120);
+
+        var angle_data = d3.layout.pie()
+            .value(function(d) {
+                return d.population;
+            });
+
+        var color = d3.scale.category10();
+
+        g.selectAll("path")
+            .data(angle_data(data))
+            .enter()
+            .append("path")
+            .attr("d", arc_generator)
+            .style("fill", function(d, i) {
+                return color(i);
+            });
+
+        g.selectAll("text")
+            .data(angle_data(data))
+            .enter()
+            .append("text")
+            .text(function(d) {
+                return d.data.education;
+            })
+
+      .attr("transform", function(d) { return "translate(" + arc_generator.centroid(d) + ")"; })
+      .attr("dy", ".35em")
+      .style("text-anchor", "middle")
+      ;
+
+    });
+
+    function type(d) {
+        d.population = +d.population;
+        return d;
+    }
+    </script>
+</body>
+
+</html>

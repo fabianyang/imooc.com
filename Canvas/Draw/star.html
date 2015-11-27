@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>lineJoin miterLimit</title>
+    <style></style>
+</head>
+
+<body>
+    <canvas id="canvas" style="border:3px solid #aaa;display:block;margin:50px auto;">
+        当前浏览器不支持Canvas，请更换浏览器后再试
+    </canvas>
+    <script>
+    window.onload = function() {
+
+        var canvas = document.getElementById("canvas");
+
+        canvas.width = 800;
+        canvas.height = 800;
+
+        var context = canvas.getContext("2d");
+
+        context.lineWidth = 10;
+        context.lineJoin = 'miter';
+        context.miterLimit = 20;
+        drawStar(context, 30, 300, 400, 400, 20);  // 尝试改变小圆的半径，多种样式星星
+    }
+
+    function drawStar(cxt, r, R, x, y, rot) {
+        // r, R 控制星星大小  x, y 控制星星位移
+        // rot: rotation 控制旋转角度，18 + i * 72是逆时针分析过程，所以顺时针旋转需要- rot
+        cxt.beginPath();
+        for (var i = 0; i < 5; i++) {
+            cxt.lineTo(Math.cos((18 + i * 72 - rot) / 180 * Math.PI) * R + x, -Math.sin((18 + i * 72 - rot) / 180 * Math.PI) * R + y);
+            cxt.lineTo(Math.cos((54 + i * 72 - rot) / 180 * Math.PI) * r + x, -Math.sin((54 + i * 72 - rot) / 180 * Math.PI) * r + y);
+        }
+        cxt.closePath();
+        cxt.stroke();
+    }
+    // (18+i*72) / 180 * Math.PI 角度转换为弧度
+    // * 300 半径
+    // 位移
+
+    function drawPolygon(cxt, pol, R, r, x, y, rot, bigAngle, smallAngle, angleDiff) {
+
+        cxt.beginPath();
+        for (var i = 0; i < pol; i++) {
+            cxt.lineTo(Math.cos((bigAngle + i * angleDiff - rot) / 180 * Math.PI) * R + x, -Math.sin((bigAngle + i * angleDiff - rot) / 180 * Math.PI) * R + y);
+            cxt.lineTo(Math.cos((smallAngle + i * angleDiff - rot) / 180 * Math.PI) * r + x, -Math.sin((smallAngle + i * angleDiff - rot) / 180 * Math.PI) * r + y);
+        }
+        cxt.closePath();
+        cxt.stroke();
+    }
+
+    </script>
+</body>
+
+</html>

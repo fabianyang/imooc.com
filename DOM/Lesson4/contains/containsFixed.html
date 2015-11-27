@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>contains</title>
+</head>
+<body>
+	<div id="p-node">
+		<div id="c-node">子节点内容</div>
+	</div>
+	<script>
+		function fixContains(a, b) {
+		    try {
+		        while ((b = b.parentNode)){
+		            if (b === a){
+		                return true;
+		            }
+		        }
+		        return false;
+		    } catch (e) {
+		        return false;
+		    }
+		}
+		var pNode = document.getElementById("p-node");
+		var cNode = document.getElementById("c-node").childNodes[0];
+		alert(fixContains(pNode, cNode));
+		//alert(fixContains(document, cNode));
+	</script>
+</body>
+</html>

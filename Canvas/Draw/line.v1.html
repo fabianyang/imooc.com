@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>beginPath()</title>
+    <style></style>
+</head>
+<body>
+<canvas id="canvas" style="border:3px solid #aaa;display:block;margin:50px auto;">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+</canvas>
+
+<script>
+    window.onload = function(){
+
+        var canvas = document.getElementById("canvas");
+
+        canvas.width = 800;
+        canvas.height = 800;
+
+        var context = canvas.getContext("2d");
+  
+        context.lineWidth = 10;
+
+        context.beginPath();
+        context.lineTo(100,200);
+        context.lineTo(300,400);
+        context.lineTo(100,600);
+        context.strokeStyle = "red";
+        context.stroke();
+
+        context.beginPath();
+        context.lineTo(300,200);
+        context.lineTo(500,400);
+        context.lineTo(300,600);
+        context.strokeStyle = "green";
+        context.stroke();
+
+        context.beginPath();
+        context.lineTo(500,200);
+        context.lineTo(700,400);
+        context.lineTo(500,600);
+        context.strokeStyle = "#058";
+        context.stroke();
+        
+    }
+</script>
+</body>
+</html>

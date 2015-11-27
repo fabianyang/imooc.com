@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>路径文本</title>
+</head>
+
+<body>
+    <form id="ctrl">
+        <label>x:</label>
+        <input ctrl="x" type="range" value="0" min="-200" max="200" />
+        <label>y:</label>
+        <input ctrl="y" type="range" value="0" min="-200" max="200" />
+        <label>text-anchor:</label>
+        <select ctrl="text-anchor">
+            <option value="start" selected>start</option>
+            <option value="middle">middle</option>
+            <option value="end">end</option>
+        </select>
+        <label>startOffset:</label>
+        <input ctrl="startOffset" type="range" value="0" min="0" max="100" />
+        <button type="reset">Reset</button>
+    </form>
+    <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">
+        <path id="path1" d="M 100 200 Q 200 100 300 200 T 500 200" stroke="green" fill="none" />
+        <g fill="red">
+            <circle cx="100" cy="200" r="3" />
+            <circle cx="300" cy="200" r="3" />
+            <circle cx="500" cy="200" r="3" />
+        </g>
+        <text style="font-size: 24px;">
+            <textpath xlink:href="#path1">123456789</textpath>
+        </text>
+    </svg>
+</body>
+<script>
+    // jshint browser: true
+    var ctrl= document.getElementById('ctrl');
+    var text = document.querySelector('text');
+    var textPath = text.firstElementChild;
+
+    function update(target) {
+        var attr = target.getAttribute('ctrl');
+        if(!attr) return;
+        if(attr == 'startOffset') {
+            textPath.setAttribute(attr, target.value + '%');
+        } else {
+            text.setAttribute(attr, target.value);
+        }
+    }
+
+    ctrl.addEventListener('input', function(e){
+        update(e.target);
+    })
+
+    ctrl.addEventListener('reset', function(){
+        setTimeout(function(){
+            var list = document.querySelectorAll('#ctrl *[ctrl]');
+            [].slice.call(list).forEach(update);
+        })
+    })
+</script>
+</html>

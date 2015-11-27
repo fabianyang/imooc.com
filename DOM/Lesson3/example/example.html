@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>domReady</title>
+    <script src="../domReady.js"></script>
+  </head>
+  <body>
+    <div id="showMsg"></div>
+    <div>
+      <img src="1.jpg" />
+      <img src="2.jpg" />
+      <img src="3.jpg" />
+      <img src="4.jpg" />
+      <img src="5.jpg" />
+      <img src="6.jpg" />
+    </div>
+    <script>
+      var d = document;
+      var msgBox = d.getElementById("showMsg");
+      var imgs = d.getElementsByTagName("img");
+      var time1 = null, time2 = null;
+      myReady(function(){
+          msgBox.innerHTML += "dom已加载！<br>";
+          time1 = new Date().getTime();
+          msgBox.innerHTML += "时间戳：" + time1 + "<br>";
+      });
+      window.onload = function(){
+          msgBox.innerHTML += "onload已加载！<br>";
+          time2 = new Date().getTime();
+          msgBox.innerHTML += "时间戳：" + time2 + "<br>";
+          msgBox.innerHTML +="domReady比onload快：" + (time2 - time1) + "ms<br>";
+      };
+    </script>
+  </body>
+</html>

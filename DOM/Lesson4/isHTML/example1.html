@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>isHTML</title>
+</head>
+<body>
+	<script>
+		var isHTML = function(doc) {
+		    return doc.createElement("p").nodeName === doc.createElement("P").nodeName;
+		}
+		console.log(isHTML(document));
+	</script>
+</body>
+</html>

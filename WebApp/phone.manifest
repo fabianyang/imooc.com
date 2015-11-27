@@ -1,0 +1,23 @@
+CACHE MANIFEST
+#change 965
+phone/s.css
+phone/m.js
+phone/ftscroller.js
+phone/jquery.js
+phone/html5storage.js
+phone/img/FTC-start.png
+phone/img/sina.png
+phone/img/wechat.png
+phone/img/qq.png
+phone/img/renren.png
+phone/img/1x1.gif
+phone/ad.html?isad=0
+phone/img/ios-share-button.png
+phone/img/add-to-homescreen-button.png
+/index.php/jsapi/analytics
+/log/analytics.js
+phone/font/ft-icons.ttf
+phone/font/ft-icons.woff
+
+NETWORK:
+*

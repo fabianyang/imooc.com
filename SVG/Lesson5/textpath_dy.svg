@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="600">
+    <path id="path1" d="M 100 200 Q 200 100 300 200 T 500 200" fill="none" stroke="green" />
+    <text font-size="24px" text-anchor="middle">
+        <textPath xlink:href="#path1" dominant-baseline="central" startOffset="50%">
+            <tspan>这个文字先</tspan>
+            <tspan dx="20" dy="-30" fill="blue">上去</tspan>
+            <tspan dx="20" dy="30">，又</tspan> 
+            <tspan dy="30" fill="red">下来</tspan> 
+            <tspan dy="-30">了。</tspan>
+        </textPath>
+    </text>
+</svg>

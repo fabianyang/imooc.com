@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="">
+        <label>Path:</label>
+        <select id="select">
+            <option value="none">none</option>
+            <option value="#path1">path1</option>
+            <option value="#path2">path2</option>
+            <option value="#path3">path3</option>
+        </select>
+    </form>
+    <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">
+        <path id="path1" d="M 100 200 Q 200 100 300 200 T 500 200" stroke="rgb(0,255,0)" fill="none" />
+        <path id="path2" d="M 100 300 l 100-50 200 100 100 -50" stroke="rgb(255,0,0)" fill="none" />
+        <path id="path3" d="M100 400 A 400 300 0 0 0 500 400" stroke="blue" fill="none" />
+        <text id="text" x="100" y="100" style="font-size:20px;">
+            Text path scripting.
+            <tspan id="tspan">动态使用路径文本</tspan>
+        </text>
+    </svg>
+    <script>
+    var SVG_NS = 'http://www.w3.org/2000/svg';
+    var XLINK_NS = 'http://www.w3.org/1999/xlink';
+    var text = document.getElementById('text');
+    var select = document.getElementById('select');
+    var tspan = document.getElementById('tspan');
+
+    function addTextPath() {
+        var textPath = document.createElementNS(SVG_NS, 'textPath');
+        while (text.firstChild) {
+            textPath.appendChild(text.firstChild);
+        }
+        text.appendChild(textPath);
+    }
+
+    function setTextPath(path) {
+        var textPath = text.firstChild;
+        textPath.setAttributeNS(XLINK_NS, 'xlink:href', path);
+        var pathElement = document.querySelector(path);
+        tspan.setAttribute('fill', pathElement.getAttribute('stroke'));
+    }
+
+    function removeTextPath() {
+        var textPath = text.firstChild;
+        while (textPath.firstChild) {
+            text.appendChild(textPath.firstChild);
+        }
+        text.removeChild(textPath);
+        tspan.removeAttribute('fill');
+    }
+    select.addEventListener('input', function() {
+        var value = select.value;
+        if (text.firstChild.tagName && text.firstChild.tagName.toLowerCase() == 'textpath') {
+            if (value == 'none') {
+                removeTextPath();
+            } else {
+                removeTextPath();
+                addTextPath();
+                setTextPath(value);
+            }
+        } else {
+            if (value != 'none') {
+                addTextPath();
+                setTextPath(value);
+            }
+        }
+    });
+    </script>
+</body>
+
+</html>

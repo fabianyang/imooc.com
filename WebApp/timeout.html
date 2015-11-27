@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>timeout demo 本地储存过期策略</title>
+</head>
+
+<body>
+</body>
+<script>
+// 判断当前时间减去存储时间是否大于过期时间
+function get(key, exp) {
+    var dataStr = localStorage.getItem(key);
+    var dataObj = JSON.parse(dataStr);
+    if (new Date().getTime() - dataObj.time > exp) {
+        console.log('expires');
+    } else {
+        console.log("data=" + dataObj.data);
+    }
+}
+
+function set(key, v) {
+    var curTime = new Date().getTime();
+    var timeJson = {
+        data: v,
+        time: curTime
+    };
+    //JSON.stringify(obj):对象解析出字符串
+    localStorage.setItem(key, JSON.stringify(timeJson));
+}
+</script>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>transform</title>
+    <style></style>
+</head>
+
+<body>
+    <canvas id="canvas" style="border:3px solid #aaa;display:block;margin:50px auto;">
+        当前浏览器不支持Canvas，请更换浏览器后再试
+    </canvas>
+    <!-- 可优化方面思考
+        1.有些星星落到边缘外
+        2.有些星星叠加到一起
+        3.怎样使颜色更好看
+        这种方式很难绘制出真实效果，想让表现力更加真实，需要借助图片力量。
+        
+        Ans: 
+        1.可以默认从中心向外扩散生成星星，这样就不涉及到循环比较了
+        2.去了解一下这isPointInPath() 和 isPointInStroke() https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
+
+        TeacherAns:
+        尝试一下在生成层面解决呢？ 
+     -->
+    <script>
+
+    window.onload = function() {
+
+        var canvas = document.getElementById("canvas");
+
+        canvas.width = 800;
+        canvas.height = 800;
+
+        var context = canvas.getContext("2d");
+
+        context.fillStyle = 'black';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        for (var i = 0; i < 200; i++) {
+            var r = Math.random() * 10 + 10    // r: 10 ~ 20
+            var x = Math.random() * canvas.width;
+            var y = Math.random() * canvas.height;
+            var a = Math.random() * 360    // a(阿尔法α): ，0 ~ 360°
+            drawStar(context, x, y, r, a);
+        };
+    }
+
+    function drawStar(cxt, x, y, R, rot) {
+        cxt.save()
+
+        cxt.translate(x, y);
+        cxt.rotate(rot / 180 * Math.PI);
+        cxt.scale(R,R);
+
+        starPath(cxt);     
+
+        cxt.fillStyle = '#fb3';
+        cxt.strokeStyle = '#fd5';
+        // cxt.lineWidth = 3;   // scale(x,y)有副作用
+        // cxt.lineJoin = "round";
+
+        cxt.fill();
+        cxt.stroke();
+
+        cxt.restore();
+
+    }
+
+    // 绘制标准五角星路径
+    function starPath(cxt) {
+        cxt.beginPath();
+        for (var i = 0; i < 5; i++) {
+            cxt.lineTo(Math.cos((18 + i * 72) / 180 * Math.PI) , -Math.sin((18 + i * 72) / 180 * Math.PI) );
+            cxt.lineTo(Math.cos((54 + i * 72) / 180 * Math.PI) * 0.5 , -Math.sin((54 + i * 72) / 180 * Math.PI) * 0.5 );
+        }
+        cxt.closePath();
+    }
+
+    </script>
+</body>
+
+</html>

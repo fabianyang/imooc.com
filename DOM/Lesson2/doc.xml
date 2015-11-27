@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<book>  
+    <书籍列表>  
+        <计算机书籍>  
+            <bookname isbn="xxx1234567"><<XML应用大全>></bookname>  
+            <price>39.00</price>  
+        </计算机书籍>  
+    </书籍列表>  
+<!-- 我加上的注释 -->  
+    <书籍列表>  
+        <计算机书籍>  
+            <bookname><![CDATA[Oracle应用大全《《《》》》‘’；；‘’“”]]></bookname>  
+            <price>39.00</price>  
+        </计算机书籍>  
+        <计算机书籍>  
+            <bookname>Java应用大全</bookname>  
+            <price>39.00</price>  
+        </计算机书籍>  
+    </书籍列表>  
+</book> 

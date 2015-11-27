@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <style>
+        html, body, svg {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <svg viewBox="-400 -400 800 800">
+        <path id="links" fill="none" stroke="gray"></path>
+    </svg>
+</body>
+<script src="vector.js"></script>
+<script>
+/* jshint browser: true */
+    var points = 'a,b,c,d'.split(',').map(function(name, index, arr) {
+        return {
+            name: name,
+            color: 'hsl(' + (360 * index / arr.length) + ', 100%, 60%)'
+        };
+    });
+    var relation = 150;
+    var svg = document.querySelector('svg');
+    var Vector = window.Vector;
+
+    function random(min, max) {
+        return Math.round(min + (max - min) * Math.random());
+    }
+
+    points.forEach(function(point) {
+        var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        var x = random(-300, 300);
+        var y = random(-300, 300);
+        circle.setAttribute('cx', x);
+        circle.setAttribute('cy', y);
+        circle.setAttribute('fill', point.color);
+        circle.setAttribute('r', 10);
+        point.circle = circle;
+        point.s = new Vector(x, y);
+        point.v = new Vector();
+        point.a = new Vector();
+        svg.appendChild(circle);
+    });
+
+    var lastFrameTime = +new Date();
+    function update () {
+        var frameTime = +new Date();
+        var t = frameTime - lastFrameTime;
+
+        t /= 200;
+
+        points.forEach(function(pa) {
+            var f = new Vector();
+            for (var i = 0; i < points.length; i++) {
+                var pb = points[i];
+                if (pa != pb) {
+                    var X = Vector.fromPoints(pa.s, pb.s);
+                    var currentLength = X.length();
+                    var deltaLength = currentLength - relation;
+
+                    f = f.add(X.normalize(deltaLength));
+                }
+            }
+            pa.a = f.multipy(0.1);
+            pa.v = pa.v.add(pa.a.multipy(t)).multipy(0.98); // 动能损耗
+            pa.s = pa.s.add(pa.v.multipy(t));
+            pa.circle.setAttribute('cx', pa.s.x);
+            pa.circle.setAttribute('cy', pa.s.y);
+        });
+
+        var linkPath = [];
+        for (var i = 0; i < points.length; i++) {
+            for (var j = i + 1; j < points.length; j++) {
+                linkPath = linkPath.concat([
+                    'M', points[i].s.x, points[i].s.y,
+                    'L', points[j].s.x, points[j].s.y
+                ]);
+            }
+        }
+        document.getElementById('links').setAttribute('d', linkPath.join(' '));
+
+        lastFrameTime = frameTime;
+        window.requestAnimationFrame(update);
+    }
+    window.requestAnimationFrame(update);
+
+</script>
+</html>

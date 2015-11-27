@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>isPointInPath</title>
+</head>
+
+<body>
+    <canvas id="canvas">
+        当前浏览器不支持Canvas，请更换浏览器后再试
+    </canvas>
+    <script>
+    var balls = [];
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext("2d");
+
+    window.onload = function() {
+
+        canvas.width = 800;
+        canvas.height = 800;
+
+        for (var i = 0; i < 10; i++) {
+            var aBall = {
+                r: Math.random() * 50 + 20,
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height
+            }
+            balls[i] = aBall;
+        };
+        draw();
+        // mouseup 鼠标点击，抬起时触发
+        // canvas.addEventListener('mouseup', detect);
+        canvas.addEventListener('mousemove', detect2 );
+    }
+
+    function draw() {
+        for (var i = 0; i < balls.length; i++) {
+            context.beginPath();
+            context.arc(balls[i].x, balls[i].y, balls[i].r, 0, Math.PI * 2);
+            context.closePath();
+            context.fillStyle = '#058';
+            context.fill();
+        }
+    }
+
+    function detect( event ) {
+        // 获得鼠标点击相对于 canvas 画布的位置
+        var x = event.clientX - canvas.getBoundingClientRect().left;
+        var y = event.clientY - canvas.getBoundingClientRect().top;
+        for (var i = 0; i < balls.length; i++) {
+            context.beginPath();
+            context.arc(balls[i].x, balls[i].y, balls[i].r, 0, Math.PI * 2);
+
+            if (context.isPointInPath(x,y)) {
+                context.fillStyle = '#c00';
+                context.fill();
+            }
+        }
+    }
+
+    function draw2(x, y) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        for (var i = 0; i < balls.length; i++) {
+            context.beginPath();
+            context.arc(balls[i].x, balls[i].y, balls[i].r, 0, Math.PI * 2);
+
+            if (context.isPointInPath(x,y))
+                context.fillStyle = '#c00';
+            else
+                context.fillStyle = '#058';
+            context.fill();
+
+        }   
+    }
+
+    function detect2( event ) {
+        var x = event.clientX - canvas.getBoundingClientRect().left;
+        var y = event.clientY - canvas.getBoundingClientRect().top;
+        draw2(x, y); 
+    }
+    </script>
+</body>
+
+</html>

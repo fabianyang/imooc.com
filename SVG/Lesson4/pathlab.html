@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Path Lab</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+        #svg-wrap {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 80px;
+        }
+        #svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        textarea {
+            display: block;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 98%;
+            height: 80px;
+            border: none;
+            border-top: 1px solid gray;
+            font-size: 30px;
+            outline: none;
+            padding: 0 1%;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="svg-wrap">
+        <svg id="svg" xmlns="http://www.w3.org/2000/svg">
+            <path id="path" fill="none" stroke="red" stroke-width="2"></path>
+        </svg>
+    </div>
+    <textarea id="pathString">M 10 10 L 300 500</textarea>
+</body>
+<script>
+    function draw () {
+        path.setAttribute('d', pathString.value);
+    }
+    pathString.oninput = draw;
+    draw();
+    var keys = {
+        38: 'up',
+        40: 'down'
+    };
+    pathString.onkeydown = function(e) {
+        if (!keys[e.keyCode]) return;
+
+        e.preventDefault();
+
+        var start = pathString.selectionStart,
+            end = pathString.selectionEnd,
+            length = Math.max(end - start, 1);
+
+        var content = pathString.value;
+        var parts = [];
+
+        parts.push(content.substr(0, start));
+        parts.push(content.substr(start, length));
+        parts.push(content.substr(start + length));
+
+        var number = parseInt(parts[1]);
+
+        if (isNaN(number)) return;
+
+        switch (keys[e.keyCode]) {
+            case 'up': number++; break;
+            case 'down': number--; break;
+        }
+        number = number.toString();
+
+        parts[1] = number;
+
+        pathString.value = parts.join('');
+        pathString.setSelectionRange(start, start + number.length);
+
+        draw();
+    };
+</script>
+</html>

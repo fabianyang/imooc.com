@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <style>
+        html, body, svg {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <svg viewBox="-400 -400 800 800">
+        <path id="links" fill="none" stroke="gray"></path>  
+    </svg>
+</body>
+<script src="vector.js"></script>
+<script>
+    /* links：用来绘制不同点之间的连线的 */
+    var points = 'a,b,c,d,e,f,g,h'.split(',').map(function(name, index, arr) {
+        return {
+            name: name,
+            color: 'hsl(' + (360 * index / arr.length) + ', 100%, 60%)'
+        };
+    });
+    var relation = 300; //自然长度设置为300。两个点为300时，它们之间没有产生任何的弹力和引力
+    var svg = document.querySelector('svg');
+    var k = 0.05;
+
+    var Vector = window.Vector;
+
+    function random(min, max) {
+        return Math.round(min + (max - min) * Math.random());
+    }
+
+    points.forEach(function(point) {
+        var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        var x = random(-200, 200);
+        var y = random(-200, 200);
+        circle.setAttribute('cx', x);
+        circle.setAttribute('cy', y);
+        circle.setAttribute('r', 10);
+        circle.setAttribute('fill', point.color);
+
+        svg.appendChild(circle);
+
+        point.circle = circle;  //创建的圆和和点进行绑定
+        point.s = new Vector(x, y); //计算位移
+        point.v = new Vector(); //速度没有
+        point.a = new Vector(); //加速度没有
+    });
+
+    var lastFrameTime = +new Date();
+
+    function update() {
+        var frameTime = +new Date();
+        var t = frameTime - lastFrameTime;  //两帧之间时间差
+
+        t /= 100;
+
+        // 点位置更新
+        points.forEach(function(pa) {
+            var f = new Vector();   //合力
+
+            // 计算合力
+            points.forEach(function(pb) {
+                if (pa == pb) return;
+
+                var x = Vector.fromPoints(pa.s, pb.s);
+                var delta = x.length() - relation;
+
+                // f = k * x
+                f = f.add(x.normalize(delta * k));
+            });
+
+            pa.a = f;
+            pa.v = pa.v.add(pa.a.multipy(t)).multipy(0.98);
+            pa.s = pa.s.add(pa.v.multipy(t));
+
+            pa.circle.setAttribute('cx', pa.s.x);
+            pa.circle.setAttribute('cy', pa.s.y);
+        });
+
+        // 连线更新
+        var linkPath = [];
+        points.forEach(function(pa) {
+            var sa = pa.s;
+            points.forEach(function(pb) {
+                if (pa == pb) return;
+                var sb = pb.s;
+                linkPath = linkPath.concat([
+                    'M', sa.x, sa.y,
+                    'L', sb.x, sb.y
+                ]);
+            });
+        });
+        document.getElementById('links').setAttribute('d', linkPath.join(' '));
+
+        lastFrameTime = frameTime;
+        window.requestAnimationFrame(update);
+    }
+
+    window.requestAnimationFrame(update);   //首次执行
+
+</script>
+</html>

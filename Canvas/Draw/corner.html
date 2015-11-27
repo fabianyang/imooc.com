@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>arc</title>
+    <style></style>
+</head>
+
+<body>
+    <canvas id="canvas" style="border:3px solid #aaa;display:block;margin:50px auto;">
+        当前浏览器不支持Canvas，请更换浏览器后再试
+    </canvas>
+    <script>
+    window.onload = function() {
+
+        var canvas = document.getElementById("canvas");
+
+        canvas.width = 800;
+        canvas.height = 800;
+
+        var context = canvas.getContext("2d");
+
+        // drawRoundRect(context, 100, 100, 600, 500, 50)
+        fillRoundRect( context, 150, 150, 500, 500, 10, '#bbada0');
+        for (var i = 0; i < 4; i++) 
+            for (var j = 0; j < 4; j++)
+                fillRoundRect(context, 170 + i * 120, 170 + j *120, 100, 100, 6, '#ccc0b3')
+
+
+    }
+
+    function fillRoundRect(cxt, x, y, width, height, radius, fillColor) {
+        if (2 * radius > width || 2 * radius > height)
+            return;
+        cxt.save();
+        cxt.translate(x, y);
+        pathRoundRect(cxt, width, height, radius);
+        cxt.fillStyle = fillColor || 'black';
+        cxt.fill();
+        cxt.restore();
+    }
+
+    function strokeRoundRect(cxt, x, y, width, height, radius, lineWidth, strokeColor) {
+        if (2 * radius > width || 2 * radius > height)
+            return;
+        cxt.save();
+        cxt.translate(x, y);
+        pathRoundRect(cxt, width, height, radius);
+        cxt.lineWidth = lineWidth || 1;
+        cxt.strokeStyle = strokeColor || 'black';
+        cxt.stroke();
+        cxt.restore();
+    }
+
+    function drawRoundRect(cxt, x, y, width, height, radius) {
+        cxt.save();
+        cxt.translate(x, y); // 先translate(x,y)，后再设置圆角矩形路径时，只需要从(0,0)开始设置就好了，比较方便
+        pathRoundRect(cxt, width, height, radius);
+        cxt.strokeStyle = 'black';
+        cxt.stroke();
+        cxt.restore();
+    }
+
+
+    function pathRoundRect(cxt, width, height, radius) {
+        cxt.beginPath();
+
+        cxt.arc(width - radius, height - radius, radius, 0, Math.PI / 2);
+        cxt.lineTo(radius, height);
+
+        cxt.arc(radius, height - radius, radius, Math.PI / 2, Math.PI);
+        cxt.lineTo(0, radius);
+
+        cxt.arc(radius, radius, radius, Math.PI, Math.PI * 3 / 2);
+        cxt.lineTo(width - radius, 0);
+
+        cxt.arc(width - radius, radius, radius, Math.PI * 3 / 2, Math.PI * 2);
+
+        cxt.closePath();
+    }
+
+    // R:半径，vPI=Math.PI,width:宽，height：高
+    // g.arc(R, R, R, vPI, 1.5 * vPI);//左上角圆弧
+    // g.arc(R + width, R, R, 1.5 * vPI, 2 * vPI);//右上角圆弧
+    // g.arc(R + width, R + height, R, 0, 0.5 * vPI);//右下角圆弧
+    // g.arc(R, R + height, R, 0.5 * vPI, 1 * vPI);//左下角圆弧
+    // g.stroke();
+    </script>
+</body>
+
+</html>

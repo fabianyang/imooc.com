@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>学生花名册</title>
+    <script type="text/javascript">
+    //初始化数据
+    var db;
+    var arraykey = [];
+    var openRequest;
+    var lastCursor;
+    var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
+    var dbName = "student";
+    var dbVersion = 2.0;
+    var tablename = "student"
+        //页面加载完成之后执行数据库打开或者初始化
+    window.onload = function init() {
+            openRequest = indexedDB.open(dbName); //如果数据库存在就打开，如果数据库不存在就去新建
+            //1、创建新数据库，或者数据库版本号被更改的时候出发onupgradeneeded事件，并执行回调函数
+            openRequest.onupgradeneeded = function(e) {
+                    console.log("onupgradeneeded 运行中……");
+                    var thisDb = e.target.result;
+                    console.log(thisDb.version);
+                    //判断是否有这个表格的存在
+                    if (!thisDb.objectStoreNames.contains(tablename)) {
+                        console.log("我需要新建一个存储对象");
+                        //如果表格不存在，创建一个新的表格（keyPath，主键 ； autoIncrement,是否自增），会返回一个对象（objectStore）
+                        var objectStore = thisDb.createObjectStore(tablename, {
+                            keyPath: "id",
+                            autoIncrement: true
+                        });
+                        //指定可以被索引的字段，unique字段是否唯一
+                        objectStore.createIndex("name", "name", {
+                            unique: false
+                        });
+                        objectStore.createIndex("address", "address", {
+                            unique: false
+                        });
+                    }
+                }
+                //2、打开数据库成功是触发的事件，onsuccess;
+            openRequest.onsuccess = function(e) {
+                db = e.target.result;
+                console.log(db.version);
+                db.onerror = function(event) {
+                    alert("数据库错误：" + event.taeget.errorCode);
+                    console.dir(event.target);
+                };
+                //判断表格是否存在，存在则遍历数据
+                if (db.objectStoreNames.contains(tablename)) {
+                    console.log("contains table" + tablename);
+                    //通过事物去操控表格
+                    var transaction = db.transaction([tablename], "readwrite");
+                    //事物的回调函数处理
+                    transaction.oncomplete = function(event) {
+                        console.log("全部完成！");
+                    };
+                    transaction.onerror = function(event) {
+                        console.dir(event);
+                    };
+
+                    //得到表里面的objectStore对象
+                    var objectStore = transaction.objectStore(tablename);
+                    //使用游标遍历
+                    objectStore.openCursor().onsuccess = function(event) {
+                        var cursor = event.target.result;
+                        if (cursor) {
+                            console.log(cursor.key);
+                            console.log(cursor.value);
+                            render({
+                                key: cursor.key,
+                                name: cursor.value["name"],
+                                date: cursor.value["date"],
+                                address: cursor.value["address"]
+                            })
+                            lastCursor = cursor.key;
+                            cursor.continue();
+                        } else {
+                            console.log("Done with cursor");
+                        }
+                    };
+                    objectStore.openCursor().onerror = function(event) {
+                        console.dir(event);
+                    }
+                }
+            }
+            openRequest.onerror = function(event) {
+                console.dir(event.target);
+            }
+
+            //添加方法
+            document.querySelector("#add").addEventListener("click", function() {
+                //初始化一个学生对象
+                var name = document.querySelector("#name").value;
+                var date = document.querySelector("#date").value;
+                var address = document.querySelector("#address").value;
+                var student = {
+                    "name": name,
+                    "date": date,
+                    "address": address
+                };
+                //获取一个事物
+                var transaction = db.transaction([tablename], "readwrite");
+                //事物回调函数的处理
+                transaction.oncomplete = function(event) {
+                    console.log("transactiono complete");
+                }
+                transaction.onerror = function(event) {
+                        console.dir(event);
+                    }
+                    //通过事物得到一个objectStore对象
+                var objectStore = transaction.objectStore(tablename);
+                objectStore.add(student);
+                //将新添加的数据，加入到html里面展示
+                objectStore.openCursor().onsuccess = function() {
+                    cursor = event.target.result;
+                    var key;
+                    if (lastCursor == null) {
+                        key = cursor.key;
+                        lastCursor = key;
+                    } else {
+                        key = ++lastCursor;
+                    }
+                    render({
+                        key: key,
+                        name: name,
+                        date: date,
+                        address: address
+                    });
+                    console.log("成功添加一条新纪录！key值：" + key);
+                    console.dir(student);
+                }
+            });
+            //查询数据库
+            document.querySelector("#seacher").addEventListener("click", function() {
+                var curName = document.getElementById("seartxt").value;
+                var transaction = db.transaction([tablename], "readwrite");
+                transaction.oncomplete = function(event) {
+                    console.log("transaction complete");
+                };
+                transaction.onerror = function(event) {
+                    console.dir(event);
+                };
+                //得到objectStore对象
+                var objectStore = transaction.objectStore(tablename);
+                var boundKeyRange = IDBKeyRange.only(curName); //生成一个鞭尸范围的Range对象
+                objectStore.index("name").openCursor(boundKeyRange).onsuccess = function(event) {
+                    var cursor = event.target.result;
+                    if (!cursor) {
+                        return;
+                    }
+                    var rowData = cursor.value;
+                    console.log(rowData);
+                    document.getElementById("result").innerHTML = "<caption><h3>学生花名册</h3></caption><tr><th>学号</th><th>姓名</th><th>生日</th><th>地址</th><th>删除</th></tr>"
+                    render({
+                        key: cursor.key,
+                        name: cursor.value["name"],
+                        date: cursor.value["date"],
+                        address: cursor.value["address"]
+                    });
+                    cursor.continue();
+                }
+            });
+            //删除数据库
+            document.querySelector("#deleteDatabase").addEventListener("click", function() {
+                if (confirm("您确定要删除数据库吗？\n操作不可逆")) {
+                    var dbname = prompt("请输入数据库名称，以确认删除", "");
+                    if (dbname == dbName) {
+                        var deleteDB = indexedDB.deleteDatabase(dbName);
+                        var result = document.querySelector("#result");
+                        while (result.firstChild.nextSibling) {
+                            result.removeChild(result.firstChild.nextSibling);
+                        }
+                        window.location.reload(true);
+                    }
+                }
+            });
+        }
+        //删除方法
+    function deletestu(key) {
+        var transaction = db.transaction([tablename], "readwrite");
+        transaction.oncomplete = function(event) {
+            console.log("transaction complete!");
+        };
+
+        transaction.onerror = function(event) {
+                console.dir(event);
+            }
+            //得到objectStore对象
+        var objectStore = transaction.objectStore(tablename);
+        //接收传过来的key值
+        var removeKey = parseInt(key);
+        //通过key值获取对象,在控制台打印
+        var getRequest = objectStore.get(removeKey);
+        getRequest.onsuccess = function(e) {
+            var result = getRequest.result;
+            console.dir(result);
+        };
+        var request = objectStore.delete(removeKey);
+        request.onsuccess = function(e) {
+            console.log("success delete record!");
+        };
+        request.onerror = function(e) {
+            console.log("Error delete record:", e);
+        }
+        document.getElementById(removeKey).style.display = "none";
+
+    }
+    //将从游标得到的database数据添加到html的方法
+    function render(student) {
+        //接收传输的值
+        var stu = student;
+        //将结束到的josn数据变成一行表格
+        var html = "<tr id='" + stu.key + "'><td>" + stu.key + "</td><td>" + stu.name + "</td><td>" + stu.date + "</td><td>" + stu.address + "</td><td><input type='button' onClick='deletestu(" + stu.key + ")' value='删除' />";
+        //将得到的表格数据，追加到结果表中去
+        document.getElementById("result").innerHTML += html;
+    }
+    </script>
+    <style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    #tools {
+        color: #fff;
+        position: fixed;
+        width: 100%;
+        bottom: 0px;
+        left: 0px;
+        background-color: #069;
+        height: 30px;
+        line-height: 30px;
+    }
+    
+    #tools:hover {
+        height: 150px;
+    }
+    
+    #tools div {
+        width: 30%;
+        float: left;
+        text-align: center;
+    }
+    
+    #tools div {
+        display: block;
+    }
+    
+    #tools div input[type=button],
+    input[type=reset] {
+        width: 70px;
+        background-color: #fff;
+        color: #069;
+        border: 0;
+        font-weight: bolder;
+        margin-left: 5px;
+    }
+    
+    table {
+        border: 2px solid #ccc;
+        margin: 20px auto;
+    }
+    
+    td,
+    th {
+        width: 200px;
+        border: 1px solid #069;
+    }
+    </style>
+</head>
+
+<body>
+    <table id="result" cellpadding="0" cellspacing="0">
+        <caption>
+            <h3>学生花名册</h3></caption>
+        <tr>
+            <th>学号</th>
+            <th>姓名</th>
+            <th>生日</th>
+            <th>地址</th>
+            <th>删除</th>
+        </tr>
+    </table>
+    <div id="tools">
+        <div id="adddiv">
+            <h3>添加学生</h3>
+            <label for="name">姓名</label>
+            <input type="text" name="name" id="name" />
+            <br />
+            <label for="date">生日</label>
+            <input type="date" name="date" id="date" />
+            <br />
+            <label for="address">地址</label>
+            <input type="text" name="address" id="address" />
+            <br />
+            <input type="button" name="add" value="添加" id="add" />
+            <input type="reset" value="重置表单" />
+        </div>
+        <div id="seacherdiv">
+            <h3>搜索学生姓名</h3>
+            <input type="text" id="seartxt" />
+            <input type="button" id="seacher" name="seacher" value="搜索" />
+        </div>
+        <div id="deletediv">
+            <h3>删除数据库</h3>
+            <input type="button" name="deleteDatabase" id="deleteDatabase" value="删除数据库" />
+        </div>
+    </div>
+</body>
+
+</html>

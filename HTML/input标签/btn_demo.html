@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>圆角水晶按钮</title>
+<style type="text/css">
+*{ margin:0; padding:0}
+.mydiv{ margin:50px; padding:30px; width:600px; background-color:#ddd}
+h4{ color:#333}
+input{*vertical-align:middle}
+.text{ height:30px; line-height:30px; width:200px}
+.btn_old{width:50px; height:40px;}
+.btnA{ width:100px;  height:40px; border:none; font-size:14px; color:#fff; background:url(images/btn.png)}
+
+a{height:40px;line-height:40px;display:inline-block;font-size:14px; color:#fff;text-decoration:none}
+
+.btnB{padding-left:15px;cursor:pointer;background:url(images/btn_bg.png)}
+.btnB span{display:inline-block;padding-right:20px;background:url(images/btn_bg.png) right -40px}
+
+.btnB:hover{background-position:0 -80px;}
+.btnB:hover span{background-position: right -120px;}
+
+.btnC{ height:38px;padding:0 16px; background:url(images/css3_btn_bg.png); border:#3C81C4 1px solid; border-radius:5px}
+.btnC:hover{background-position:0 -40px;border:#86B2D1 1px solid}
+
+</style>
+
+</head>
+
+<body>
+<div class="mydiv">
+    <form action="get.php" method="post">
+        <label>用户名：<input class="text" type="text" value="张三" /></label><br /><br />
+        <label>密　码：<input class="text" type="password" /></label><br />
+    <br />
+        <input class="btn_old" type="button" value="按钮" />
+        <input class="btnA" type="submit" value="提交按钮" />
+        <a class="btnB" href="javascript:;" onclick="alert('慕课网')"><span>ds asd sad fad fsad fa df适应圆角按钮</span></a>
+        <a class="btnC" href="javascript:;" onclick="alert('慕课网')">CSS3 圆角按钮</a>
+    </form>
+</div>
+</body>
+</html>

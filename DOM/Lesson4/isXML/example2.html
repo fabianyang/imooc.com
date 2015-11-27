@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>isXML</title>
+</head>
+<body>
+	<script>
+		//我们看看mootools的slick选择器引擎的源码：
+		var isXML = function(document) {
+		    return (!!document.xmlVersion) || (!!document.xml) || (toString.call(document) == '[object XMLDocument]')
+		            || (document.nodeType == 9 && document.documentElement.nodeName != 'HTML');
+		};
+
+		//精简版
+		var isXML = window.HTMLDocument ? function(doc) {
+		    return !(doc instanceof HTMLDocument);
+		} : function(doc) {
+		    return "selectNodes" in doc;
+		}
+	</script>
+</body>
+</html>

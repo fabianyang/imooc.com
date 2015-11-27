@@ -1,0 +1,115 @@
+body{font-family:Arial;
+     font-size:23px;}
+.wrap h3{
+  text-align:center;
+  position:relative;
+  top:80px;
+}
+.wrap {
+  width:70%;
+  height:200px;
+  background:#FFF;
+  margin:40px auto;
+}
+
+.effect{
+  position:relative;       
+     -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3) , 0 0 40px rgba(0, 0, 0, 0.1) inset;
+   	   -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset; 
+    			box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0px 0px 40px rgba(0, 0, 0, 0.1) inset;
+}
+ .effect:before, .effect:after{
+    content:"";
+	position:absolute; 
+	z-index:-1;
+	-webkit-box-shadow:0 0 20px rgba(0,0,0,0.8);
+	-moz-box-shadow:0 0 20px rgba(0,0,0,0.8);
+	box-shadow:0 0 20px rgba(0,0,0,0.8);
+	top:50%;
+	bottom:0;
+	left:10px;
+	right:10px;
+	-moz-border-radius:100px / 10px;
+	border-radius:100px / 10px;
+} 
+
+ul.box {
+	width:980px;
+	height:auto;
+	margin: 20px auto;
+	padding: 0;
+	clear: both;
+	overflow: hidden; 
+}
+
+ul.box li {
+	list-style-type: none;
+	margin:20px 10px;
+	padding: 0;
+	width: 300px;
+	height: 220px;
+	border: 2px solid #efefef;
+	position: relative;
+	float: left;
+	background: #ffffff; /* old browsers */
+	line-height:220px;
+	font-size:32px;
+	text-align:center;
+	
+	
+	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 60px rgba(0, 0, 0, 0.1) inset;
+	-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 60px rgba(0, 0, 0, 0.1) inset; 
+	-o-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 60px rgba(0, 0, 0, 0.1) inset;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 60px rgba(0, 0, 0, 0.1) inset;
+	
+}
+
+ul.box li:before { 
+	 z-index: -2;  
+	position: absolute; 
+	background: transparent; 
+	width: 90%; 
+	height: 80%; 
+	content: ''; 
+	left: 20px; 
+	bottom:8px; 
+	
+	 -webkit-transform: skew(-12deg) rotate(-4deg); 
+	 	-moz-transform:skew(-12deg) rotate(-4deg); 
+	 	-o-transform: skew(-12deg) rotate(-4deg); 
+	 	-ms-transform: skew(-12deg) rotate(-4deg);  
+	
+	-webkit-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); 
+	-moz-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); 
+	-o-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); 
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); 
+	
+}
+
+ ul.box li:after { 
+	z-index: -1; 
+	position: absolute; 
+	background: transparent; 
+	width: 90%; 
+	height: 80%; 
+	content: ''; 
+	right:20px;  
+	bottom:8px; 
+	
+	-webkit-transform: skew(12deg) rotate(4deg); 
+	-moz-transform:skew(12deg) rotate(4deg); 
+	-o-transform: skew(12deg) rotate(4deg); 
+	-ms-transform: skew(12deg) rotate(4deg); 
+	
+	-webkit-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); 
+	-moz-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); 
+	-o-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); 
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); 
+
+}  
+
+.box li img{
+	width:290px;
+	height:210px;
+	padding:5px;
+}

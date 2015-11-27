@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <style>
+        html, body, svg {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <svg viewBox="-400 -400 800 800">
+        <rect x="-25" y="-25" width="50" height="50" fill="rgba(0, 255, 255, .6)">
+            <animateMotion
+                dur="3s"
+                rotate="auto"
+            >
+                <mpath xlink:href="#motion-path"></mpath>
+            </animateMotion>
+        </rect>
+        <path id="motion-path" d="M 0 0L 100 100A 200 200 0 1 0 0 -100" stroke="gray" fill="none"></path>
+    </svg>
+</body>
+</html>

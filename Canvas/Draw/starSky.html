@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>LinearGradient RadialGradient</title>
+    <style></style>
+</head>
+
+<body>
+    <canvas id="canvas" style="border:3px solid #aaa;display:block;margin:50px auto;">
+        当前浏览器不支持Canvas，请更换浏览器后再试
+    </canvas>
+    <script>
+
+    window.onload = function() {
+
+        var canvas = document.getElementById("canvas");
+
+        canvas.width = 1200;
+        canvas.height = 800;
+
+        var context = canvas.getContext("2d");
+
+
+        var skyStyle = context.createLinearGradient(0,0,0,canvas.height);
+        skyStyle.addColorStop(0.0, 'black');
+        skyStyle.addColorStop(1.0, '#035');
+
+        var skyStyle = context.createRadialGradient(canvas.width/2, canvas.height, 0, canvas.width/2, canvas.height, canvas.height);
+        skyStyle.addColorStop(0.0, '#035');
+        skyStyle.addColorStop(1.0, 'black');
+
+        context.fillStyle = skyStyle;
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        for (var i = 0; i < 200; i++) {
+            var r = Math.random() * 5 + 5
+            var x = Math.random() * canvas.width;
+            var y = Math.random() * canvas.height * 0.65;
+            var a = Math.random() * 360
+            drawStar(context, x, y, r, a);
+        };
+    }
+
+    function drawStar(cxt, x, y, R, rot) {
+        cxt.save()
+
+        cxt.translate(x, y);
+        cxt.rotate(rot / 180 * Math.PI);
+        cxt.scale(R,R);
+
+        startPath(cxt);     
+
+        cxt.fillStyle = '#fb3';
+
+        cxt.fill();
+
+        cxt.restore();
+
+    }
+
+    // 绘制标准五角星路径
+    function startPath(cxt) {
+        cxt.beginPath();
+        for (var i = 0; i < 5; i++) {
+            cxt.lineTo(Math.cos((18 + i * 72) / 180 * Math.PI) , -Math.sin((18 + i * 72) / 180 * Math.PI) );
+            cxt.lineTo(Math.cos((54 + i * 72) / 180 * Math.PI) * 0.5 , -Math.sin((54 + i * 72) / 180 * Math.PI) * 0.5 );
+        }
+        cxt.closePath();
+    }
+
+    </script>
+</body>
+
+</html>

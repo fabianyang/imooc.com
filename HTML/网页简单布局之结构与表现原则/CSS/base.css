@@ -1,0 +1,68 @@
+﻿/*reset*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: 12px;
+	font-family: "Arial", "sans-serif", "微软雅黑", "宋体", "Tahoma";
+}
+h1{font-size: 24px;}
+h2{font-size: 20px;}
+h3{font-size: 18px;}
+h4{font-size: 16px;}
+h5{font-size: 14px;}
+h6{font-size: 12px;}
+img{vertical-align: middle; border:none 0}
+a{cursor: pointer;text-decoration: none}
+
+/*表&表单*/
+table{border-collapse:collapse; border-spacing:0; border:0}
+input,select{vertical-align: middle}
+textarea{resize:none}
+label {vertical-align: middle}
+input:focus , textarea:focus {outline: none}    
+.text{height:20px;vertical-align: middle; border: 1px solid #CCC}
+.radio{	vertical-align:-3px;*vertical-align:-1px;border:none 0;	border-top-width: 0px}
+.btn {border:none 0;text-align:center;vertical-align: middle}
+
+/*文字排版*/
+.fb{font-weight:bold}
+.fn{font-weight:normal}
+.unl{text-decoration:underline;}
+.no_unl{text-decoration:none;}
+.strong{font-weight:bold}
+
+
+/*定位*/
+.tl{text-align:left}
+.tc{text-align:center}
+.tr{text-align:right}
+.tb {font-weight: bold;}
+.tn {font-weight: normal;}
+.fl{float:left;display:inline}
+.fr{float:right;display:inline}
+.cb{clear:both}
+.cl{clear:left}
+.cr{clear:right}
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+* html .clearfix{height:1%}
+.vm{vertical-align:middle}
+.pr {position: relative;}
+.pa {position: absolute;}
+.zoom{zoom:1}
+.hidden{visibility:hidden}
+.none{display:none}
+.w{width:100%}
+.h{height:100%}
+.mc {margin:0px auto;}
+.back {
+	height: 18px;
+	width: 120px;
+	position: absolute;
+	top: 0px;
+	right: 30px;
+	background-image: url(../../../images/backbg.png);
+	text-align: center;
+	color: #FFF;
+}
+.back:hover{ color:#069}

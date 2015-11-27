@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>clip 探照灯</title>
+    <style></style>
+</head>
+<body>
+<canvas id="canvas" style="border:3px solid #aaa;display:block;margin:50px auto;">
+    当前浏览器不支持Canvas，请更换浏览器后再试
+</canvas>
+
+<script>
+    var searchLight = {x: 400, y:400, radius: 150, vx: Math.random()*5 +10, vy: Math.random()*5+10}
+    var rot = 0;
+    var isIncrease = true;
+
+    window.onload = function(){
+
+        var canvas = document.getElementById("canvas");
+
+        canvas.width = 800;
+        canvas.height = 800;
+
+        var context = canvas.getContext("2d");
+
+        setInterval(function() {
+            draw2(context);
+            update2(canvas.width, canvas.height);
+        }, 50);
+        
+    }
+
+    function draw(cxt) {
+        cxt.clearRect(0,0,cxt.canvas.width, cxt.canvas.height);
+
+        cxt.save();
+
+        cxt.beginPath();
+        cxt.fillStyle = "#000"
+        cxt.fillRect(0,0,cxt.canvas.width,cxt.canvas.height);
+
+        cxt.beginPath();
+        cxt.arc( searchLight.x, searchLight.y, searchLight.radius, 0, Math.PI*2);
+        cxt.fillStyle = "#fff"
+        cxt.fill();
+        cxt.clip();
+  
+        cxt.font = "bold 150px Arial";
+        cxt.textAlign = "center";
+        cxt.textBaseline = "middle";
+        cxt.fillStyle = "#058";
+        cxt.fillText("CANVAS", cxt.canvas.width/2, cxt.canvas.height/4);
+        cxt.fillText("CANVAS", cxt.canvas.width/2, cxt.canvas.height/2);
+        cxt.fillText("CANVAS", cxt.canvas.width/2, cxt.canvas.height*3/4);
+        cxt.restore();
+    }
+
+    function update(canvasWidth, canvasHeight) {
+        rot += 1;
+
+        searchLight.x += searchLight.vx;
+        searchLight.y += searchLight.vy;
+
+        if (searchLight.x - searchLight.radius <= 0) {
+            searchLight.vx = -searchLight.vx;
+            searchLight.x = searchLight.radius;
+        }
+
+        if (searchLight.x + searchLight.radius >= canvasWidth) {
+            searchLight.vx = -searchLight.vx;
+            searchLight.x = canvasWidth - searchLight.radius;
+        }
+
+        if (searchLight.y - searchLight.radius <= 0) {
+            searchLight.vy = -searchLight.vy;
+            searchLight.y = searchLight.radius;
+        }
+
+        if (searchLight.y + searchLight.radius >= canvasHeight) {
+            searchLight.vy = -searchLight.vy;
+            searchLight.y = canvasHeight - searchLight.radius;
+        }
+    
+    }
+
+    function draw2(cxt) {
+        cxt.clearRect(0,0,cxt.canvas.width, cxt.canvas.height);
+
+        cxt.save();
+
+        cxt.beginPath();
+        cxt.fillStyle = "#000"
+        cxt.fillRect(0,0,cxt.canvas.width,cxt.canvas.height);
+
+        cxt.save()
+        cxt.translate(searchLight.x, searchLight.y);
+        cxt.rotate(rot / 180 * Math.PI);
+        cxt.scale(searchLight.radius,searchLight.radius);
+        starPath(cxt);     
+
+        cxt.fillStyle = "#fff"
+        cxt.fill();
+        cxt.restore();
+
+        cxt.clip();
+  
+        cxt.font = "bold 150px Arial";
+        cxt.textAlign = "center";
+        cxt.textBaseline = "middle";
+        cxt.fillStyle = "#058";
+        cxt.fillText("CANVAS", cxt.canvas.width/2, cxt.canvas.height/4);
+        cxt.fillText("CANVAS", cxt.canvas.width/2, cxt.canvas.height/2);
+        cxt.fillText("CANVAS", cxt.canvas.width/2, cxt.canvas.height*3/4);
+        cxt.restore();
+    }
+
+    function update2(canvasWidth, canvasHeight) {
+        if (searchLight.radius > 700) {
+            isIncrease = false;
+        } else if ( searchLight.radius < 150) {
+            isIncrease = true;
+        }
+        if (isIncrease) {
+            searchLight.radius += 5;
+        } else {
+            searchLight.radius -= 5;
+        }
+    }
+
+    // 绘制标准五角星路径
+    function starPath(cxt) {
+        cxt.beginPath();
+        for (var i = 0; i < 5; i++) {
+            cxt.lineTo(Math.cos((18 + i * 72) / 180 * Math.PI) , -Math.sin((18 + i * 72) / 180 * Math.PI) );
+            cxt.lineTo(Math.cos((54 + i * 72) / 180 * Math.PI) * 0.5 , -Math.sin((54 + i * 72) / 180 * Math.PI) * 0.5 );
+        }
+        cxt.closePath();
+    }
+
+
+
+</script>
+</body>
+</html>
