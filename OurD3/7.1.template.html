@@ -1,0 +1,141 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>选择集与数据 - 5.0 模板的应用</title>
+</head>
+
+<body>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script>
+    var dataset = [50, 43, 120, 87, 99, 167, 142];
+
+    var width = 400; //SVG绘制区域的宽度
+    var height = 400; //SVG绘制区域的高度
+
+    var svg = d3.select("body") //选择<body>
+        .append("svg") //在<body>中添加<svg>
+        .attr("width", width) //设定<svg>的宽度属性
+        .attr("height", height); //设定<svg>的高度属性
+
+    //外边框
+    var padding = {
+        top: 20,
+        right: 20,
+        bottom: 20,
+        left: 20
+    };
+    //矩形所占的宽度（包括空白），单位为像素
+    var rectStep = 35;
+    //矩形所占的宽度（不包括空白），单位为像素
+    var rectWidth = 30;
+
+
+    function draw() {
+
+        //获取矩形的update部分
+        var updateRect = svg.selectAll("rect")
+            .data(dataset);
+
+        //获取矩形的enter部分
+        var enterRect = updateRect.enter();
+
+        //获取矩形的exit部分
+        var exitRect = updateRect.exit();
+
+        //1. 矩形的update部分的处理方法
+        updateRect.attr("fill", "steelblue") //设置颜色为steelblue
+            .attr("x", function(d, i) { //设置矩形的x坐标
+                return padding.left + i * rectStep;
+            })
+            .attr("y", function(d) { //设置矩形的y坐标
+                return height - padding.bottom - d;
+            })
+            .attr("width", rectWidth) //设置矩形的宽度
+            .attr("height", function(d) { //设置矩形的高度
+                return d;
+            });
+
+        //2. 矩形的enter部分的处理方法
+        enterRect.append("rect")
+            .attr("fill", "steelblue") //设置颜色为steelblue
+            .attr("x", function(d, i) { //设置矩形的x坐标
+                return padding.left + i * rectStep;
+            })
+            .attr("y", function(d) { //设置矩形的y坐标
+                return height - padding.bottom - d;
+            })
+            .attr("width", rectWidth) //设置矩形的宽度
+            .attr("height", function(d) { //设置矩形的高度
+                return d;
+            });
+
+        //3. 矩形的exit部分的处理方法
+        exitRect.remove();
+
+
+        //获取文字的update部分
+        var updateText = svg.selectAll("text")
+            .data(dataset);
+
+        //获取文字的enter部分
+        var enterText = updateText.enter();
+
+        //获取文字的exit部分
+        var exitText = updateText.exit();
+
+        //1. 文字的update部分的处理方法
+        updateText.attr("fill", "white")
+            .attr("font-size", "14px")
+            .attr("text-anchor", "middle")
+            .attr("x", function(d, i) {
+                return padding.left + i * rectStep;
+            })
+            .attr("y", function(d) {
+                return height - padding.bottom - d;
+            })
+            .attr("dx", rectWidth / 2)
+            .attr("dy", "1em")
+            .text(function(d) {
+                return d;
+            });
+
+        //2. 文字的enter部分的处理方法
+        enterText.append("text")
+            .attr("fill", "white")
+            .attr("font-size", "14px")
+            .attr("text-anchor", "middle")
+            .attr("x", function(d, i) {
+                return padding.left + i * rectStep;
+            })
+            .attr("y", function(d) {
+                return height - padding.bottom - d;
+            })
+            .attr("dx", rectWidth / 2)
+            .attr("dy", "1em")
+            .text(function(d) {
+                return d;
+            });
+
+        //3. 文字的exit部分的处理方法
+        exitText.remove();
+    }
+
+    draw();
+
+    function mysort() {
+        dataset.sort(d3.ascending);
+        draw();
+    }
+
+    function myadd() {
+        dataset.push(Math.floor(Math.random() * 100));
+        draw();
+    }
+    </script>
+    <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="button" onclick="mysort()"> 排序 </button>
+    <button type="button" onclick="myadd()"> 增加数据 </button>
+</body>
+
+</html>

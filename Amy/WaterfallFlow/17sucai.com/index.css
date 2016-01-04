@@ -1,0 +1,57 @@
+body{
+	background: url(../bg/932.jpg);
+}
+#na{
+	color: #ddd;
+	font-family: '微软雅黑';
+	font-size: 2em;
+	text-align: center;
+}
+#main{
+	position: relative;
+}
+.pin{
+	padding: 15px 0 0 15px;
+	float: left;
+}
+.box{
+	padding: 5px;
+	border: 1px solid #ccc;
+	box-shadow: 0 0 6px #ccc;
+	border-radius: 5px;
+
+}
+.box img{
+	width:250px;
+	height: auto;
+	border: 1px solid #ccc;
+	box-shadow: 0 0 6px #ccc;
+	border-radius: 5px;
+}
+#glass{
+	width: 250px;
+	height: 280px;
+	background: #fff;
+	position: absolute;
+	opacity: 0.4;
+	border-radius: 5px;
+	display: none;
+}
+#glass_text{
+	width: 250px;
+	height: 60px;
+	position: absolute;
+	bottom: 0px;
+	background: #111;
+	color: #fff;
+	font-size: 2em;
+	text-align: center;
+	font-weight: bolder;
+	padding: 0;
+	z-index: 1;
+}
+#glass_text p{
+	margin: 0;
+	line-height: 60px;
+	z-index: 1;
+}

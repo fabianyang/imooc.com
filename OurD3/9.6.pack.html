@@ -1,0 +1,81 @@
+<html>
+<head>
+        <meta charset="utf-8">  
+        <title>Pack</title>  
+  </head> 
+
+<style>
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+	var width  = 500;
+	var height = 500;
+	
+	var pack = d3.layout.pack()
+	    			.size([ width, height ])
+	    			.radius(20);
+	
+	var svg = d3.select("body").append("svg")
+	    .attr("width", width)
+	    .attr("height", height)
+	    .append("g")
+	    .attr("transform", "translate(0,0)");
+	
+	
+	d3.json("city2.json", function(error, root) {
+		
+		var nodes = pack.nodes(root);
+		var links = pack.links(nodes);
+		
+		console.log(nodes);
+		console.log(links);
+		
+		svg.selectAll("circle")
+			.data(nodes)
+			.enter()
+			.append("circle")
+			.attr("fill","rgb(31, 119, 180)")
+			.attr("fill-opacity","0.4")
+			.attr("cx",function(d){
+				return d.x;
+			})
+			.attr("cy",function(d){
+				return d.y;
+			})
+			.attr("r",function(d){
+				return d.r;
+			})
+			.on("mouseover",function(d,i){
+				d3.select(this)
+					.attr("fill","yellow");
+			})
+			.on("mouseout",function(d,i){
+				d3.select(this)
+					.attr("fill","rgb(31, 119, 180)");
+			});
+		
+		svg.selectAll("text")
+					  .data(nodes)
+					  .enter()
+					  .append("text")
+					  .attr("font-size","10px")
+					  .attr("fill","white")
+					  .attr("fill-opacity",function(d){
+						  if(d.depth == 2)
+							  return "0.9";
+						  else
+							  return "0";
+					  })
+					  .attr("x",function(d){ return d.x; })
+					  .attr("y",function(d){ return d.y; })
+					  .attr("dx",-12)
+					  .attr("dy",1)
+					  .text(function(d){ return d.name; });
+		
+	});
+
+</script>
+	
+</body>  
+</html>  

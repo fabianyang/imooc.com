@@ -1,0 +1,15 @@
+<h2>Ice-Creams</h2>
+<table class="table table-hover table-striped table-bordered">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Cost</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="topic in topics">
+            <td>{{ topic.name }}</td>
+            <td>${{ topic.price }}</td>
+        </tr>
+    </tbody>
+</table>

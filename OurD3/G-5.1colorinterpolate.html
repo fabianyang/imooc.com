@@ -1,0 +1,94 @@
+
+<html>  
+  <head>  
+        <meta charset="utf-8">  
+        <title>颜色插值</title>  
+  </head> 
+  <style>
+
+  </style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script>
+
+var width = 400,
+	height = 400;
+	
+var svg = d3.select("body").append("svg")
+	.attr("width", width)
+	.attr("height", height);
+
+var a = d3.rgb(255,0,0);	//红色
+var b = d3.rgb(0,255,0);	//绿色
+ 
+var compute = d3.interpolate(a,b);
+
+var linear = d3.scale.linear()
+				.domain([0,150])
+				.range([0,1]);
+
+var rects = svg.selectAll("rect")
+				.data(d3.range(150))
+				.enter()
+				.append("rect")
+				.attr("x",function(d,i){
+					return i%15 * 15;
+				})
+				.attr("y",function(d,i){
+					return Math.floor(i/15) * 15;
+				})
+				.attr("width",15)
+				.attr("height",15)
+				.style("fill",function(d){
+					return compute(linear(d));
+				})
+				.on("mouseover",function(d){
+					d3.select(this)
+						.style("fill","yellow");
+				})
+				.on("mouseout",function(d){
+					d3.select(this)
+						.style("fill",compute(linear(d)).toString());
+				});
+
+
+//定义一个线性渐变
+var defs = svg.append("defs");
+
+var linearGradient = defs.append("linearGradient")
+						.attr("id","linearColor")
+						.attr("x1","0%")
+						.attr("y1","0%")
+						.attr("x2","100%")
+						.attr("y2","0%");
+
+var stop1 = linearGradient.append("stop")
+				.attr("offset","0%")
+				.style("stop-color",a.toString());
+
+var stop2 = linearGradient.append("stop")
+				.attr("offset","100%")
+				.style("stop-color",b.toString());
+
+//添加一个矩形，并应用线性渐变
+var colorRect = svg.append("rect")
+				.attr("x", 15)
+				.attr("y", 200)
+				.attr("width", 200)
+				.attr("height", 30)
+				.style("fill","url(#" + linearGradient.attr("id") + ")")
+				.on("mouseover",function(d){
+					d3.select(this)
+						.style("fill","yellow");
+				})
+				.on("mouseout",function(d){
+					d3.select(this)
+						.style("fill","url(#" + linearGradient.attr("id") + ")");
+				});
+
+
+
+</script>
+		
+    </body>  
+</html>  

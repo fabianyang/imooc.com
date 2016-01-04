@@ -1,0 +1,39 @@
+<!doctype html>
+<html ng-app="form-example1">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="css/bootstrap-3.0.0/css/bootstrap.css" media="screen">
+		<script src="framework/angular-1.3.0.14/angular.js"></script>
+		<script src="FormValidation.js"></script>
+	</head>
+	<body>
+		<div>
+			<form name="myForm" class="css-form" novalidate>
+				<div>
+					整数(0-10):
+					<input type="number" ng-model="size" name="size" min="0" max="10" integer/>
+					{{size}}
+					<br/>
+					<span ng-show="myForm.size.$error.integer">不是合法的整数！</span>
+					<span ng-show="myForm.size.$error.min || myForm.size.$error.max">
+						数值必须位于0到10之间！
+					</span>
+				</div>
+				<div>
+					浮点数:
+					<input type="text" ng-model="length" name="length" smart-float />
+						{{length}}
+					<br/>
+					<span ng-show="myForm.length.$error.float">不是合法的浮点数！</span>
+				</div>
+				<div>
+					远程校验:
+					<input type="text" ng-model="remote" name="remote" remote-validation />
+						{{remote}}
+					<br/>
+					<span ng-show="myForm.remote.$error.remote">非法数据！</span>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>

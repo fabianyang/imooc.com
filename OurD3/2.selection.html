@@ -1,0 +1,38 @@
+<html>  
+  <head>  
+        <meta charset="utf-8">  
+        <title>选择元素和绑定数据</title>  
+  </head>  
+    <body>  
+	
+		<p>Apple</p>
+		<p>Pear</p>
+		<p>Banana</p>
+		
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>  
+        <script>
+		
+        var str = "China";
+
+        var body = d3.select("body");
+        var p = body.selectAll("p");
+
+        //使用 datum 绑定单个数据
+        /*p.datum(str);
+
+        p.text(function(d, i){
+        	return "第 "+ i + " 个元素绑定的数据是 " + d;
+        });*/
+
+		//使用 data 绑定数组
+		var dataset = ["I like dogs","I like cats","I like snakes"];
+
+		p.data(dataset)
+			.text(function(d, i){
+				return d;
+			});
+
+        </script>  
+  
+    </body>  
+</html>  

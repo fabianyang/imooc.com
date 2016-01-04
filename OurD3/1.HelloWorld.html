@@ -1,0 +1,33 @@
+<html>  
+  <head>  
+        <meta charset="utf-8">  
+        <title>第一个程序 HelloWorld</title>  
+  </head>  
+    <body>  
+		<p>Hello World 1</p>
+		<p>Hello World 2</p>
+		
+	
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>  
+        <script>
+		   
+		var p = d3.select("body")
+          .selectAll("p")
+          .text("www.ourd3js.com");
+ 
+		//修改段落的颜色和字体大小
+		p.style("color","red")
+		 .style("font-size","72px");
+
+		/* 使用 JavaScript 更改段落元素
+		var paragraphs = document.getElementsByTagName("p");
+		for (var i = 0; i < paragraphs.length; i++) {
+		  var paragraph = paragraphs.item(i);
+		  paragraph.innerHTML = "I like dog";
+		}
+		*/
+				
+        </script>  
+  
+    </body>  
+</html>  
