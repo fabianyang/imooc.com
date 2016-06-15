@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas 红包照片</title>
+    <link rel="stylesheet" href="../jquery-2.1.3.min.js" />
+    <link rel="stylesheet" href="blur.css" />
+</head>
+<body>
+    <div id="blur-div">
+        <img id="blur-img" src="image.jpeg" alt="">
+        <canvas id="canvas">
+            最好不要在 css 中设置 canvas 大小,而要在 js 代码中设置
+            使用 canvas 绘制借口,剪辑区域创建出后面是模糊背景,前面有一个圆形的清晰图像效果
+        </canvas>
+    </div>
+    <script src="blur.js"></script>
+</body>
+</html>
